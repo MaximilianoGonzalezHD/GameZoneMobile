@@ -1,0 +1,7 @@
+{
+  "name": "gamezonemobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

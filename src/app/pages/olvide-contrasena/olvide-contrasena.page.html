@@ -1,0 +1,31 @@
+<ion-header >
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> GameZone </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-grid class="container">
+    <ion-row> 
+      <ion-col>
+        <h1 class="neon-rgb">¿Olvidaste tu contraseña?</h1>
+      </ion-col>
+    </ion-row>
+    <ion-card class="margin-top" >
+      <ion-card-header>
+        <ion-card-title class="neon-rgb">Recuperar Contraseña</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input placeholder="Ingrese su Correo..." ></ion-input>
+      </ion-item>
+      <ion-button  [routerLink]="['/cambiar-contrasena']" >Confirmar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+  
+</ion-content>

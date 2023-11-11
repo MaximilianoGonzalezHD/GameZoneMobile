@@ -1,0 +1,86 @@
+
+<ion-app>
+  <ion-menu  contentId="main-content">
+    
+    <ion-header>
+
+      <ion-toolbar color="dark">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item [routerLink]="['/home']"> Inicio 
+          <ion-icon  slot="start" name="storefront-outline"></ion-icon>
+        </ion-item>
+        <hr>
+        <ion-item  *ngIf="hasUserRole('null')"  [routerLink]="['/login']"> Login
+          <ion-icon  slot="start" name="person-outline"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="hasUserRole('null')" [routerLink]="['/register']"> Registro 
+          <ion-icon  slot="start" name="person-add-outline"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="hasUserRole('1')" [routerLink]="['/perfil']"> Perfil 
+          <ion-icon  slot="start" name="person-circle-outline"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="hasUserRole('2')" [routerLink]="['/perfil']"> Perfil Admin
+          <ion-icon  slot="start" name="person-circle-outline"></ion-icon>
+        </ion-item>
+        <hr>
+
+        <ion-item [routerLink]="['/juegos-nintendo']"> Juegos Nintendo 
+          <ion-icon  slot="start" name="game-controller-outline"></ion-icon>
+        </ion-item>
+        <ion-item [routerLink]="['/juegos-xbox']"> Juegos Xbox 
+          <ion-icon  slot="start" name="logo-xbox"></ion-icon>
+        </ion-item>
+        <ion-item [routerLink]="['/juegos-pc']"> Juegos Pc 
+          <ion-icon  slot="start" name="logo-steam"></ion-icon>
+        </ion-item>
+        <ion-item [routerLink]="['/juegos-play-station']"> Juegos PlayStation 
+          <ion-icon  slot="start" name="logo-playstation"></ion-icon>  
+        </ion-item>
+        <hr>
+        
+        <ion-item *ngIf="hasUserRole('1')" position="bottom" [routerLink]="['/historial']"> Historial Compras
+          <ion-icon  slot="start" name="receipt"></ion-icon>
+        </ion-item>  
+        <ion-item position="bottom" [routerLink]="['/carrito']"> Carrito 
+          <ion-icon  slot="start" name="cart"></ion-icon>
+        </ion-item>
+
+        <hr>
+        <ion-item *ngIf="hasUserRole('2')"  position="bottom" (click)="irUsuarios()"> Usuarios Registrados
+          <ion-icon slot="start" name="id-card-outline"></ion-icon>
+        </ion-item>
+
+        <ion-item *ngIf="hasUserRole('2')" position="bottom" (click)="irVideojuegos()"> Lista de Videojuegos
+          <ion-icon slot="start" name="list-outline"></ion-icon>
+        </ion-item>
+        <hr>
+        <ion-item *ngIf="hasUserRole('1')" (click)="logout()"> Cerrar Sesión 
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        </ion-item>
+
+        <ion-item *ngIf="hasUserRole('2')" (click)="logout()"> Cerrar Sesión 
+          <ion-icon slot="start" name="log-out-outline"></ion-icon>
+          </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <div class="ion-page" id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding"></ion-content>
+  </div>
+
+
+  <ion-router-outlet id="menu" main></ion-router-outlet>
+</ion-app>

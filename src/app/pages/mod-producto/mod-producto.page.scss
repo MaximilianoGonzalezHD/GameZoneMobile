@@ -1,0 +1,22 @@
+ion-content {
+    --background: rgb(68, 7, 124);
+    position: relative;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0.5rem;
+
+        ion-button {
+            height: 60px;
+            width: 60px;
+
+            ion-icon {
+                font-size: 2rem;
+            }
+        }
+    }}
+
+    .margin-top{
+        margin-top: 100px;
+    }

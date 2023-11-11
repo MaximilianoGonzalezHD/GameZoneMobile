@@ -1,0 +1,48 @@
+<ion-header >
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> Admin </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar class="m-t" placeholder="Buscar Videojuego" ></ion-searchbar>
+  <ion-card class="m-t centrado">
+    <ion-card-title class="m-t neon-rgb">Listado de Videojuegos</ion-card-title>
+  <ion-card-content>
+  <ion-list *ngIf="list_videojuegos.length > 0">
+    <ion-item-sliding *ngFor="let x of list_videojuegos">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img [src]="x.imagenv" alt="Imagen del juego">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ x.nombrev }}</h2>
+          <p style="word-wrap: break-word;white-space: normal;">precio: {{ x.precio | precioClp }}$</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option (click)="modificar(x)">
+          <ion-icon slot="bottom" name="pencil-sharp"></ion-icon>
+          Modificar
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="eliminar(x)">
+          <ion-icon slot="bottom" name="trash"></ion-icon>
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <div class="ion-text-center" *ngIf="list_videojuegos.length === 0">
+    No se encontraron videojuegos.
+  </div>
+
+</ion-card-content>
+</ion-card>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" (click)="agregarjuego()">Agregar Videojuego</ion-button>
+</ion-footer>

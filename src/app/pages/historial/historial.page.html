@@ -1,0 +1,38 @@
+<ion-header >
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> GameZone </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h1 class="neon-rgb">Historial De Compras</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list lines="none" class="custom-table">
+            <ion-item class="header-row">
+              <ion-label class="centrado">Nombre</ion-label>
+              <ion-label class="centrado">Cantidad</ion-label>
+              <ion-label class="centrado">Subtotal</ion-label>
+              <ion-label class="centrado">Total</ion-label>
+            </ion-item>
+            <ion-item *ngFor="let detalle of detalles">
+              <ion-label class="centrado">{{ detalle.videojuego.nombrev }}</ion-label>
+              <ion-label class="centrado">{{ detalle.cantidad }}</ion-label>
+              <ion-label class="centrado">{{ detalle.subtotal | precioClp }}</ion-label>
+              <ion-label class="centrado">{{ totalCompra | precioClp }}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

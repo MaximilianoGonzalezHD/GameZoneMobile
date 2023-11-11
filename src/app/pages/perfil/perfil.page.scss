@@ -1,0 +1,53 @@
+ion-content {
+    --background: rgb(68, 7, 124);
+    position: relative;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0.5rem;
+
+        ion-button {
+            height: 60px;
+            width: 60px;
+
+            ion-icon {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .card {
+        height: 75%;
+        width: 100%;
+        background: white;
+        position: absolute;
+        bottom: 0;
+        border-radius: 3rem 3rem 0 0;
+        padding: 2rem;
+
+        .image{
+            position: absolute;
+            top: -6.5rem;
+            width: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
+
+.imagen-perfil {
+    width: 100px; /* Tamaño personalizado */
+    height: 100px; /* Tamaño personalizado */
+    border-radius: 50%; /* Forma circular */
+    object-fit: cover; /* Ajuste de imagen */
+    border: 2px solid #fff; /* Borde blanco opcional */
+  }
+  .perfil-usuario {
+    text-align: center; /* Centra el contenido */
+    margin: auto; /* Centra horizontalmente */
+    width: 90%; /* Establece un ancho máximo para el perfil */
+    max-width: 400px; /* Ajusta el ancho máximo según tus preferencias */
+    background-color: #fff; /* Cambia el color de fondo si es necesario */
+    padding: 30px; /* Espacio interior para separar los elementos */
+  }

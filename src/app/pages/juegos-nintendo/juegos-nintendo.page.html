@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> Nintendo </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">juego</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div *ngFor="let x of videojuegosNintendo" class="containernin">
+    <div (click)="iraljuego(x.slug)" class="borde-neon-nintendo">
+     
+      <img [src]="x.imagenv" alt="{{ x.nombrev }}" width="200" height="200">
+      <div>
+        <span class="neon-title-nintendo-icon">{{ x.nombrev }}</span>
+      </div>
+      <div>
+      <span class="neon-title-nintendo-icon">Precio: {{ x.precio | precioClp }}</span>
+    </div>
+    </div>
+  </div>
+</ion-content>

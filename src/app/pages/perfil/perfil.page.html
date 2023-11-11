@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button color="primary" name="menu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="centrado"> Perfil </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content [fullscreen]="true">
+    <ion-card class="centrado perfil-usuario margin-top">
+      <ion-avatar class="imagen-perfil">
+        <img *ngIf="usuario_list[0].imagenu" [src]="usuario_list[0].imagenu" alt="Imagen de perfil del usuario" />
+        <img *ngIf="!usuario_list[0].imagenu" alt="Silhouette of a person's head" src="assets/images/fotoperfil.jpg" />
+      </ion-avatar>
+      <ion-list class="infoBasica">
+        <ion-item *ngIf="usuario_list">
+          <ion-label>Usuario:</ion-label>
+          <ion-label>{{ usuario_list[0].nombre_usuariou }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Correo: </ion-label>
+          <ion-label>{{ usuario_list[0].emailu }}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="usuario_list[0].nombreu">
+          <ion-label>Nombre: </ion-label>
+          <ion-label>{{ usuario_list[0].nombreu }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </ion-content>
+
+ <ion-footer>
+  <div class="centrado" >
+  <ion-button (click)="ircambiarcontrasena()" >Cambiar contraseña</ion-button>
+  <ion-button (click)="irmodperfil()" expand="full">Modificar Perfil</ion-button>
+  </div>
+ </ion-footer>

@@ -1,0 +1,26 @@
+.containerpc {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-top:  15px;
+
+}
+ion-content {
+    --background: rgb(0, 0, 0);
+    position: relative;
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0.5rem;
+  
+        ion-button {
+            height: 60px;
+            width: 60px;
+  
+            ion-icon {
+                font-size: 2rem;
+            }
+        }
+    }
+}   

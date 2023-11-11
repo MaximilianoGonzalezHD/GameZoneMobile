@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado">Inicio Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="centrado margin-top">
+    <ion-card-header>
+      <ion-card-title class="neon-rgb">Logueo</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">email</ion-label>
+        <ion-input placeholder="Ingrese su email..." [(ngModel)]="email" name="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input placeholder="Ingrese su contraseña..." [(ngModel)]="password" name="password" type="password"></ion-input>
+      </ion-item>
+      <ion-button color="light" class="m-t" (click)="login()">Iniciar Sesión</ion-button>
+      <br>
+      <ion-button color="light" (click)="registrarse()">Registrarse</ion-button>
+      <hr>
+
+      <span class="margin-top" [routerLink]="['/olvide-contrasena']">¿Olvidaste tu contraseña?..</span>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

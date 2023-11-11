@@ -1,0 +1,66 @@
+
+<ion-header >
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> Registrar Usuario </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [fullscreen]="true">
+  <ion-card class="margin-top centrado">
+    <ion-card-header>
+      <h1 class="neon-rgb centrado">Registro</h1>
+    </ion-card-header>
+    <ion-card-content>
+      <form  [formGroup]="formularioRegistro" (keyup.enter)="guardar()">
+        <ion-item>
+        <div>  
+          <ion-label for="correo" class="form-label" position="floating">Correo</ion-label>
+          <ion-input type="email" class="form-control" id="correo" correo="correo" [(ngModel)]="correou" required formControlName="correo"></ion-input>
+          <div *ngIf=" formularioRegistro.get('correo')?.touched && formularioRegistro.get('correo')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+        </div>
+        </ion-item>
+        <ion-item>
+        <div>
+          <ion-label for="nombre" class="form-label" position="floating">Nombre de usuario</ion-label>
+          <ion-input type="text" class="form-control" id="nombre" nombre="nombre" [(ngModel)]="nombreu" required formControlName="nombre"></ion-input>
+          <div *ngIf=" formularioRegistro.get('nombre')?.touched && formularioRegistro.get('nombre')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+          <div *ngIf=" formularioRegistro.get('nombre')?.touched && formularioRegistro.get('nombre')?.errors?.['minlength']" class="alert alert-danger">Min 5 caracteres...</div>
+          <div *ngIf=" formularioRegistro.get('nombre')?.touched && formularioRegistro.get('nombre')?.errors?.['maxlength']" class="alert alert-danger">Max 20 caracteres...</div>
+        </div>
+        </ion-item>
+        <ion-item>
+        <div>
+          <ion-label for="NombreOpcional" class="form-label" position="floating" >Nombre Opcional (Opcional)</ion-label>
+          <ion-input type="text" class="form-control" id="NombreOpcional" NombreOpcional="NombreOpcional" [(ngModel)]="nombreuop" required formControlName="NombreOpcional"></ion-input>
+          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['minlength']" class="alert alert-danger">Min 5 caracteres...</div>
+          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['maxlength']" class="alert alert-danger">Max 20 caracteres...</div>
+        </div>
+        </ion-item>
+        <ion-item>
+          <div>
+            <ion-label for="" class="form-label" position="floating" >Contraseña</ion-label>
+            <ion-input type="password" class="form-control" id="password" password="password" [(ngModel)]="contrau" required formControlName="password"></ion-input>
+            <div *ngIf=" formularioRegistro.get('password')?.touched && formularioRegistro.get('password')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+            <div *ngIf=" formularioRegistro.get('password')?.touched && formularioRegistro.get('password')?.errors?.['minlength']" class="alert alert-danger">Min 5 caracteres...</div>
+            <div *ngIf=" formularioRegistro.get('password')?.touched && formularioRegistro.get('password')?.errors?.['maxlength']" class="alert alert-danger">Max 30 caracteres...</div>
+            <div *ngIf=" formularioRegistro.get('password')?.touched && formularioRegistro.get('password')?.errors?.['pattern']" class="alert alert-danger">Debe poseer al menos una mayuscula...</div>
+          </div>
+        </ion-item>
+        <ion-item>
+          <div>
+            <ion-label for="confirmacionPassword" class="form-label" position="floating" >Confirmar contraseña </ion-label>
+            <ion-input type="password" class="form-control" id="confirmacionPassword" confirmacionPassword="confirmacionPassword" required formControlName="confirmacionPassword"></ion-input>
+            <div *ngIf=" formularioRegistro.get('confirmacionPassword')?.touched && formularioRegistro.get('confirmacionPassword')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+          </div>
+        </ion-item>
+        <br>
+        <ion-button (click)="guardar()">Registrarse
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card> 
+</ion-content>

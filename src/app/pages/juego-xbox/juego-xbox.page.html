@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> Xbox </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="centrado">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">juego</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid class="containerjuego">
+    <ion-row>
+      <ion-col>
+        <ion-grid class="centrado">
+          <ion-row>
+            <ion-col>
+              <img class="borde-neon-xbos" [src]="videojuego.imagenv" alt="{{ videojuego.nombrev }}" width="236" height="290">>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="neon-title-xbos-icon">{{ videojuego.nombrev }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p class="borde-neon-xbos m-t">{{ videojuego.descripcion }}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="borde-neon-xbos"><span>Precio: </span>{{ videojuego.precio | precioClp }}</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button color="light" [routerLink]="['/carrito']" expand="full">Añadir Al
+          Carrito</ion-button></ion-col>
+      <ion-col><ion-button color="light" expand="full">Comprar</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

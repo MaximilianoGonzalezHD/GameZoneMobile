@@ -1,0 +1,247 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+
+ /* animaciones neon*/
+  @keyframes neonAnimation {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(248, 255, 255, 0.8), 0 0 20px rgba(248, 255, 255, 0.8), 0 0 30px rgba(248, 255, 255, 0.8);
+      color: rgba(248, 255, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 15px  rgba(255, 0, 255, 0.8), 0 0 25px  rgba(255, 0, 255, 0.8), 0 0 35px rgba(255, 0, 255, 0.8);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  @keyframes neonAnimationToolbar {
+    0%, 100% {
+      text-shadow: 0 0 1px rgba(248, 255, 255, 0.8), 0 0 5px rgba(248, 255, 255, 0.8), 0 0 10px rgba(248, 255, 255, 0.8);
+      color: rgba(248, 255, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 1px  rgba(255, 0, 255, 0.8), 0 0 5px  rgba(255, 0, 255, 0.8), 0 0 10px rgba(255, 0, 255, 0.8);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  @keyframes neonAnimationplei {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.8);
+      color: rgba(248, 255, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 15px  rgb(247, 248, 255), 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(245, 245, 246, 0.8);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  @keyframes neonAnimationxbos {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(0, 255, 26, 0.8), 0 0 20px rgba(0, 255, 51, 0.8), 0 0 30px rgba(0, 255, 51, 0.8);
+      color: rgba(248, 255, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 15px  rgb(247, 248, 255), 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(245, 245, 246, 0.8);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  @keyframes neonAnimationnintendo {
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(234, 255, 0, 0.867), 0 0 20px rgba(221, 255, 0, 0.883), 0 0 30px rgba(246, 255, 0, 0.8);
+      color: rgba(248, 255, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 15px  rgb(247, 248, 255), 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(245, 245, 246, 0.8);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  @keyframes neonAnimationPC{
+    0%, 100% {
+      text-shadow: 0 0 10px rgba(38, 0, 255, 0.867), 0 0 20px rgba(0, 0, 255, 0.883), 0 0 30px rgba(0, 0, 255, 0.8);
+      color: rgba(248, 255, 255, 0.8);
+    }
+    50% {
+      text-shadow: 0 0 15px  rgb(247, 248, 255), 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(245, 245, 246, 0.8);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  /* titulos*/
+  ion-title{
+    margin-right: 50px;
+    animation: neonAnimationToolbar 2s infinite;
+ }
+
+  .neon-rgb {
+    font-size: 1.25rem; 
+    animation: neonAnimation 2s infinite;
+  }
+
+  .neon-title-plei-icon{
+    margin-left: 5px;
+    font-size: 1.25rem; 
+    animation: neonAnimationplei 2s infinite;
+ }
+
+ .neon-title-xbos-icon{
+  margin-left: 5px;
+  font-size: 1.25rem; 
+  animation: neonAnimationxbos 2s infinite;
+}
+.neon-title-nintendo-icon{
+  margin-left: 5px;
+  font-size: 1.25rem; 
+  animation: neonAnimationnintendo 2s infinite;
+}
+.neon-title-PC-icon{
+  margin-left: 5px;
+  font-size: 1.25rem; 
+  animation: neonAnimationPC 2s infinite;
+}
+
+/* Posiciones, etc */
+.container{
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: row; 
+  margin: 0 10px;
+
+
+}
+
+.centrado{
+  text-align: center;
+}
+/* Bordes */
+.borde-neon {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #800080, #ff00ff);
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.8), 0 0 20px rgba(128, 0, 128, 0.8), 0 0 30px rgba(128, 0, 128, 0.8);
+  }
+
+  .borde-neon-plei {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #000000, #000000);
+    box-shadow: 0 0 10px rgba(4, 185, 222, 0.8), 0 0 20px rgba(1, 251, 255, 0.8), 0 0 30px rgba(6, 201, 255, 0.8);
+  }
+
+  .borde-neon-xbos {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #02ff28, #1aff4f);
+    box-shadow: 0 0 10px rgba(30, 255, 5, 0.8), 0 0 20px rgba(26, 255, 0, 0.8), 0 0 30px rgba(1, 255, 9, 0.8);
+  }
+
+  .borde-neon-xbos {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #02ff28, #1aff4f);
+    box-shadow: 0 0 10px rgba(30, 255, 5, 0.8), 0 0 20px rgba(26, 255, 0, 0.8), 0 0 30px rgba(1, 255, 9, 0.8);
+  }
+  .borde-neon-nintendo {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ff0000, #ff0e0e);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.8);
+  }
+  .borde-titulo {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.8), 0 0 20px rgba(128, 0, 128, 0.8), 0 0 30px rgba(128, 0, 128, 0.8);
+  }
+
+  .borde-neon-PC {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2b00ff, #1e0eff);
+    box-shadow: 0 0 10px rgba(9, 50, 252, 0.8), 0 0 20px rgba(8, 0, 255, 0.8), 0 0 30px rgba(1, 5, 254, 0.8);
+  }
+
+/* Margins */
+.m-t{
+  margin-top: 30px;
+}
+
+.m-l{
+  margin-left: 50px;
+}
+
+ion-card{
+  background-color: #000000;
+}
+
+ion-item{
+  background-color: #000000;
+}
+
+
+
+ion-list.custom-list {
+  background-color: #000000;
+}
+
+span{
+  color: aliceblue;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+p{
+  color: white;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.mi-alerta {
+  background-color: #00000045; 
+ 
+}
+button.alert-button.alert-button-confirm {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+}
+
+.md button.alert-button.alert-button-confirm {
+  border-radius: 4px;
+  text-align: center;
+}

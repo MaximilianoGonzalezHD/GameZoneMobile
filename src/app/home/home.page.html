@@ -1,0 +1,69 @@
+<ion-header >
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> GameZone </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <app-loading></app-loading>
+  <ion-grid class="containerinicio">
+    <ion-row>
+      <ion-col>
+        <h1 class="neon-rgb">Bienvenido a GameZone</h1>
+        <h1 class="neon-rgb">Secciones:</h1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row [routerLink]="['/juegos-play-station']" class="m-t">
+      <ion-col class="borde-neon-plei">
+        <img  position="floating"  src="assets/icon/plei.png" alt="plei">
+        <ion-row>
+          <ion-col>
+            <span class="neon-title-plei-icon">PlayStation</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row [routerLink]="['/juegos-xbox']" class="m-t">
+      <ion-col class="borde-neon-xbos">
+        <img  position="floating"  src="assets/icon/xbox.png" alt="xbos">
+        <ion-row>
+          <ion-col>
+            <span class="neon-title-xbos-icon">Xbox</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row [routerLink]="['/juegos-nintendo']" class="m-t">
+      <ion-col class="borde-neon-nintendo">
+        <img position="floating"  src="assets/icon/nintendo.png" alt="nintendo">
+        <ion-row>
+          <ion-col>
+            <span class="neon-title-nintendo-icon">Nintendo</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row [routerLink]="['/juegos-pc']" class="m-t">
+      <ion-col class="borde-neon-PC">
+        <img  position="floating"  src="assets/icon/steam.png" alt="steam">
+        <ion-row>
+          <ion-col>
+            <span class="neon-title-PC-icon">PC</span>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+
+
+
+  </ion-grid>
+</ion-content>
+  

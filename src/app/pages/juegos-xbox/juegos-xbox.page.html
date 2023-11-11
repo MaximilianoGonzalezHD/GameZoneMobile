@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> Xbox</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">juego</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div *ngFor="let x of videojuegosX" class="containerxbox">
+    <div (click)="iraljuego(x.slug)" class="borde-neon-xbos">
+     
+      <img [src]="x.imagenv" alt="{{ x.nombrev }}" width="200" height="200">
+      <div>
+        <span class="neon-title-xbos-icon">{{ x.nombrev }}</span>
+      </div>
+      <div>
+      <span class="neon-title-xbos-icon">Precio: {{ x.precio | precioClp }}</span>
+    </div>
+    </div>
+  </div>
+</ion-content>

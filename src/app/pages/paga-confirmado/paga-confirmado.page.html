@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> GameZone </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card class="centrado perfil-usuario margin-top ">
+    <ion-card-header>
+      <ion-card-title class="neon-rgb">Detalles de la Compra</ion-card-title>
+    </ion-card-header>
+    <ion-list class="infoBasica">
+      <ion-item *ngIf="compra">
+        <ion-label>Fecha:</ion-label>
+        <ion-label>{{ compra.fechac }}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="usuario_list">
+        <ion-label>Usuario:</ion-label>
+        <ion-label>{{ usuario_list[0].nombre_usuariou }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>RUT:</ion-label>
+        <ion-label>{{ compra.rutc }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Correo: </ion-label>
+        <ion-label>{{ usuario_list[0].emailu }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Total:</ion-label>
+        <ion-label>{{ compra.totalc | precioClp }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-button class="centrado" (click)="confirmarcompra()">Confirmar</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

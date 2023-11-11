@@ -1,0 +1,44 @@
+<ion-header >
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" name="menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="centrado"> GameZone </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid >
+    <ion-row>
+      <ion-col>
+        <h1 class="neon-rgb m-t">Comprar</h1>
+      </ion-col>
+    </ion-row>
+    <ion-card class="margin-top">
+      <ion-card-header>
+        <ion-card-title class="neon-rgb"> Tus Datos </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+
+        <ion-item *ngIf="hasUserRole('null')">
+          <ion-label position="floating">Rut:</ion-label>
+          <ion-input placeholder="Ingrese su Rut..." [(ngModel)]="rut"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="hasUserRole('null')"><ion-label style="color:grey;">Ejemplo: xx.xxx.xxx</ion-label></ion-item>
+        
+        <ion-item *ngIf="hasUserRole('null')">
+          <ion-label position="floating">Correo:</ion-label>
+          <ion-input placeholder="Ingrese su Correo..." [(ngModel)]="correo"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="centrado">Total: {{ totalCarrito | precioClp }} </ion-label>
+        </ion-item>
+        <ion-button *ngIf="hasUserRole('null')" (click)="comprar()">Confirmar</ion-button>
+        <ion-button *ngIf="hasUserRole('1')" (click)="comprarconusuario()">Confirmar</ion-button>
+        <ion-button *ngIf="hasUserRole('2')" (click)="comprarconusuario()">Confirmar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-grid>
+</ion-content>

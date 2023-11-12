@@ -8,10 +8,11 @@ import { LoadingService } from './loading.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { Platform } from '@ionic/angular';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MatProgressBarModule,],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MatProgressBarModule, HttpClientModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SQLite],
   bootstrap: [AppComponent],
 })

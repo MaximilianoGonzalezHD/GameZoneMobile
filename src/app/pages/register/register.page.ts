@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AbstractControl } from '@angular/forms';
 import { DbTransaction } from '@awesome-cordova-plugins/sqlite/ngx';
 import { DbservicioService } from '../../services/dbservicio.service';
-import { validateRut } from '@fdograph/rut-utilities';
+
 
 @Component({
   selector: 'app-register',
@@ -28,8 +28,6 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private router: Router,
-    private transaccion: DbTransaction,
-    private rutverify: validateRut,
     public fb: FormBuilder,
     private db: DbservicioService,
     private toastController: ToastController,
@@ -62,7 +60,7 @@ export class RegisterPage implements OnInit {
           '',
           [
             Validators.required,
-            Validators.validarRut
+            Validators.rutvalide
           ]
         ],
         'password': [
@@ -71,12 +69,15 @@ export class RegisterPage implements OnInit {
             Validators.required,
             Validators.minLength(5),
             Validators.maxLength(30),
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+            Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9  !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~€£¥₩])(?=.*?[A-Z 0-9]).{8,}$")
           ]
         ],
         'confirmacionPassword': [
           '',
-          [Validators.required, passwordMatchValidator]
+          [
+            Validators.required,
+            passwordMatchValidator
+          ]
         ]
       });
   }
@@ -124,7 +125,7 @@ export class RegisterPage implements OnInit {
   return null; 
 }
 
-  validarRut(rutu: any): {
+  rutvalide(rutu: string): boolean {
   const rutRegex = /^\d{1,2}\.\d{3}\.\d{3}-\d{1,2}$/;
   return rutRegex.test(rutu);
 }

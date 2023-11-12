@@ -5,6 +5,5 @@ export class Usuario{
     contrasenau = "";
     nombreu = "";
     imagenu = "";
-    rut = "";
     rol_id = "";
 }

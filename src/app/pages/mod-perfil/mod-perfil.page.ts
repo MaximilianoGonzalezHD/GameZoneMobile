@@ -78,7 +78,7 @@ export class ModPerfilPage implements OnInit {
       quality: 90,
       allowEditing: true,
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos,
+      source: CameraSource.Camera,
     });
 
     this.imagen = image.dataUrl;

@@ -16,7 +16,7 @@
   </ion-header>
 
 
-  <ion-searchbar class="m-t" placeholder="Buscar Usuarios" ></ion-searchbar>
+  <ion-searchbar class="m-t" placeholder="Buscar Usuario" ></ion-searchbar>
   <ion-card class="m-t centrado">
     <ion-card-title class="m-t neon-rgb">Listado de Usuarios</ion-card-title>
   <ion-card-content>
@@ -27,7 +27,8 @@
           <h2>ID: {{ x.id_usuariou }}</h2>
           <p style="word-wrap: break-word;white-space: normal;">Usuario: {{ x.nombre_usuariou }}</p>
           <p style="word-wrap: break-word;white-space: normal;">contra: {{ x.emailu }}</p>
-          <p style="word-wrap: break-word;white-space: normal;">Rol: {{ nombre_rol }}</p>
+          <p *ngIf="x.rol_id == '2'" style="word-wrap: break-word;white-space: normal;">Rol: Administrador</p>
+          <p *ngIf="x.rol_id == '1'" style="word-wrap: break-word;white-space: normal;">Rol: Usuario</p>
         </ion-label>
 
       </ion-item>

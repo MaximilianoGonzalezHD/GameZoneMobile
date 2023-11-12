@@ -27,7 +27,8 @@
             <ion-label for="rut" class="form-label" position="floating">Rut</ion-label>
             <ion-input type="text" class="form-control" id="rut" rut="rut" (ionBlur)="formatRut()" required formControlName="rut"></ion-input>
             <div *ngIf=" formularioRegistro.get('rut')?.touched && formularioRegistro.get('rut')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
-            <div *ngIf=" formularioRegistro.get('rut')?.touched && formularioRegistro.get('rut')?.errors?.['Rutvalido']" class="alert alert-danger">Rut invalido</div>
+            <div *ngIf=" formularioRegistro.get('rut')?.touched && formularioRegistro.get('rut')?.errors?.['validarFormatoRut']" class="alert alert-danger">Rut invalido</div>
+            <div *ngIf=" formularioRegistro.get('rut')?.touched && formularioRegistro.get('rut')?.errors?.['validarDV']" class="alert alert-danger">Rut invalido</div>
           </div>
           </ion-item>
         <ion-item>

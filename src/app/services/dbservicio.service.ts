@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 
 export class DbservicioService {
   rol: string = "CREATE TABLE IF NOT EXISTS rol (id_rolr INTEGER PRIMARY KEY, nombrer VARCHAR(10));";
-  usuario: string = "CREATE TABLE IF NOT EXISTS usuario (id_usuariou INTEGER PRIMARY KEY, emailu VARCHAR(30), nombre_usuariou VARCHAR(30)  NOT NULL, contrasenau VARCHAR(30) NOT NULL, nombreu VARCHAR(15), imagenu BLOB, rol_id INTEGER, FOREIGN KEY (rol_id) REFERENCES rol(id_rolr));";
+  usuario: string = "CREATE TABLE IF NOT EXISTS usuario (id_usuariou INTEGER PRIMARY KEY, emailu VARCHAR(30), nombre_usuariou VARCHAR(30)  NOT NULL, contrasenau VARCHAR(30) NOT NULL, nombreu VARCHAR(15), imagenu BLOB, rut VARCHAR(30), rol_id INTEGER, FOREIGN KEY (rol_id) REFERENCES rol(id_rolr));";
   seccion: string = "CREATE TABLE IF NOT EXISTS seccion (id_seccions INTEGER PRIMARY KEY, nombres VARCHAR(30));";
   juego: string = "CREATE TABLE IF NOT EXISTS videojuegos (id_juego INTEGER PRIMARY KEY, nombrev VARCHAR(50) NOT NULL, descripcion VARCHAR(500)  NOT NULL, precio REAL NOT NULL, imagenv BLOB  NOT NULL, seccion_id INTEGER NOT NULL, slug VARCHAR(50) UNIQUE, FOREIGN KEY (seccion_id) REFERENCES seccion(id_seccions));";
   compra: string = "CREATE TABLE IF NOT EXISTS compra (id_comprac INTEGER PRIMARY KEY, fechac DATE, rutc VARCHAR(20), totalc INTEGER, usuario_id INTEGER,FOREIGN KEY (usuario_id) REFERENCES usuario (id_usuariou));";
@@ -643,6 +643,7 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
             contrasenau: res.rows.item(i).contrasenau,
             nombreu: res.rows.item(i).nombreu,
             imagenu: res.rows.item(i).imagenu,
+            rut: res.rows.item(i).rut,
             rol_id: res.rows.item(i).rol_id,
           })
         }
@@ -668,6 +669,7 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
               contrasenau: res.rows.item(i).contrasenau,
               nombreu: res.rows.item(i).nombreu,
               imagenu: res.rows.item(i).imagenu,
+              rut: res.row.item(i).rut,
               rol_id: res.rows.item(i).rol_id,
             });
           }

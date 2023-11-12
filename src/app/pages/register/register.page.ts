@@ -7,6 +7,8 @@ import { DbTransaction } from '@awesome-cordova-plugins/sqlite/ngx';
 import { DbservicioService } from '../../services/dbservicio.service';
 
 
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -20,7 +22,7 @@ export class RegisterPage implements OnInit {
   idusuario: any = "";
   correou: any = "";
   nombreu: any = "";
-  rutu: String = "";
+  rutu: any = "";
   contrau: any = "";
   nombreuop: any = "";
   rol: any = "1";
@@ -60,7 +62,9 @@ export class RegisterPage implements OnInit {
           '',
           [
             Validators.required,
-            Validators.rutvalide
+            _validateRutCheckDigitFormat,
+            _validateRutFormat,
+            _validateRutIdFormat
           ]
         ],
         'password': [
@@ -125,11 +129,6 @@ export class RegisterPage implements OnInit {
   return null; 
 }
 
-  rutvalide(rutu: string): boolean {
-  const rutRegex = /^\d{1,2}\.\d{3}\.\d{3}-\d{1,2}$/;
-  return rutRegex.test(rutu);
-}
-
  function firstUppercase(control: FormControl) {
   const value = control.value;
   if (value && value.length > 0) {
@@ -141,3 +140,22 @@ export class RegisterPage implements OnInit {
   return null;
   
 }
+
+/** @internal */
+export const _validateRutFormat = (rut: string) => {
+  const validRegex = /^([0-9]{1,3}(\.[0-9]{3})*|[0-9]{1,3}(,[0-9]{3})*|[0-9]+)-(k|K|[0-9])$/;
+  return validRegex.test(rut);
+};
+
+/** @internal */
+export const _validateRutIdFormat = (rut: string) => {
+  const validRegex = /^([0-9]{1,3}(\.[0-9]{3})*|[0-9]{1,3}(,[0-9]{3})*|[0-9]+)$/;
+  return validRegex.test(rut);
+};
+
+/** @internal */
+export const _validateRutCheckDigitFormat = (checkDigit: string) => {
+  const validRegex = /^(k|K|[0-9])$/;
+  return validRegex.test(checkDigit);
+};
+

@@ -6,9 +6,6 @@ import { AbstractControl } from '@angular/forms';
 import { DbTransaction } from '@awesome-cordova-plugins/sqlite/ngx';
 import { DbservicioService } from '../../services/dbservicio.service';
 
-
-
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -62,9 +59,8 @@ export class RegisterPage implements OnInit {
           '',
           [
             Validators.required,
-            _validateRutCheckDigitFormat,
-            _validateRutFormat,
-            _validateRutIdFormat
+            validarDV,
+            validarFormatoRut
           ]
         ],
         'password': [
@@ -142,19 +138,14 @@ export class RegisterPage implements OnInit {
 }
 
 /** @internal */
-export const _validateRutFormat = (rut: string) => {
+export const validarFormatoRut = (rut: string) => {
   const validRegex = /^([0-9]{1,3}(\.[0-9]{3})*|[0-9]{1,3}(,[0-9]{3})*|[0-9]+)-(k|K|[0-9])$/;
   return validRegex.test(rut);
 };
 
-/** @internal */
-export const _validateRutIdFormat = (rut: string) => {
-  const validRegex = /^([0-9]{1,3}(\.[0-9]{3})*|[0-9]{1,3}(,[0-9]{3})*|[0-9]+)$/;
-  return validRegex.test(rut);
-};
 
 /** @internal */
-export const _validateRutCheckDigitFormat = (checkDigit: string) => {
+export const validarDV = (checkDigit: string) => {
   const validRegex = /^(k|K|[0-9])$/;
   return validRegex.test(checkDigit);
 };

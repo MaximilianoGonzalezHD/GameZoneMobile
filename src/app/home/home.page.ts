@@ -14,8 +14,7 @@ export class HomePage {
   }
   ngOnInit() {
 
-    this.bd.setItem('userId', "null");
-    this.bd.setItem('userRole', "null");
+
     // Al iniciar la página, mostrar la animación de carga
     this.loadingService.showLoading();
 

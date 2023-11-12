@@ -24,9 +24,10 @@
     <ion-item-sliding *ngFor="let x of usuario_list">
       <ion-item>
         <ion-label>
-          <h2>{{ x.id_usuariou }}</h2>
+          <h2>ID: {{ x.id_usuariou }}</h2>
           <p style="word-wrap: break-word;white-space: normal;">Usuario: {{ x.nombre_usuariou }}</p>
           <p style="word-wrap: break-word;white-space: normal;">contra: {{ x.emailu }}</p>
+          <p style="word-wrap: break-word;white-space: normal;">Rol: {{ nombre_rol }}</p>
         </ion-label>
 
       </ion-item>

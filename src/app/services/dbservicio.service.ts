@@ -43,8 +43,6 @@ export class DbservicioService {
   admin: string = "INSERT or IGNORE INTO usuario (id_usuariou,emailu,nombre_usuariou,contrasenau,rol_id) VALUES(1,'admin@admin.cl', 'adminfirst','admin123',2)";
 
   constructor(private router: Router, private alertController: AlertController, private sqlite: SQLite, private platform: Platform) {
-
-    this.emailjs.init("jdbt heyo bfdj dkmf");
     this.createDatabase();
   }
  

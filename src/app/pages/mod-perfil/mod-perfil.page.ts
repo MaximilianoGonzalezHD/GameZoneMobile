@@ -16,6 +16,7 @@ export class ModPerfilPage implements OnInit {
       emailu: '',
       nombre_usuariou: '',
       contrasenau: '',
+      imagenu: '',
       nombreu: '',
       rol_id: '',
     }
@@ -25,7 +26,7 @@ export class ModPerfilPage implements OnInit {
 
   correou: String = "";
   nombreu: String = "";
-  imagenu: any;
+  imagen: any;
   nombreuop: String = "";
 
   constructor(private bd: DbservicioService, private router: Router) {
@@ -60,10 +61,14 @@ export class ModPerfilPage implements OnInit {
     if(!this.nombreuop){
       this.nombreuop = this.usuario_list[0].nombreu;
     }
+    if(!this.imagen){
+      this.imagen = this.usuario_list[0].imagenu;
+    }
 
 
-    this.bd.actualizarUsuario(this.userId, this.correou, this.nombreu, this.nombreuop, this.imagenu);
-    console.log('Valores para actualizar:', this.userId, this.correou, this.nombreu, this.nombreuop, this.imagenu);
+
+    this.bd.actualizarUsuario(this.userId, this.correou, this.nombreu, this.nombreuop, this.imagen);
+    console.log('Valores para actualizar:', this.userId, this.correou, this.nombreu, this.nombreuop, this.imagen);
     this.bd.presentAlert('Se han modificado sus datos!');
     this.router.navigate(['/home']);
   }
@@ -76,6 +81,6 @@ export class ModPerfilPage implements OnInit {
       source: CameraSource.Photos,
     });
 
-    this.imagenu = image.dataUrl;
+    this.imagen = image.dataUrl;
   }
 }

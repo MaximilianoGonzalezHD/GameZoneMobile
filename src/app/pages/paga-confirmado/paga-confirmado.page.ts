@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class PagaConfirmadoPage implements OnInit {
   compra: any;
-  
+  carritoId: number;
   detalles: any;
   userId: string | null | number; 
   usuario_list = [
@@ -26,10 +26,12 @@ export class PagaConfirmadoPage implements OnInit {
 
   constructor(private bd: DbservicioService, private router: Router) { 
     this.userId = localStorage.getItem('userId');
+    this.carritoId = 1;
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.carritoId = await this.bd.obtenerIdCarritoDeUsuario(this.userId);
     this.iniciarCargaDatos();
     this.bd.dbState().subscribe(async (res) => {
       if (res) {
@@ -42,10 +44,14 @@ export class PagaConfirmadoPage implements OnInit {
         }
       }
     });
+
+
+    
   }
 
   confirmarcompra() {
     this.bd.presentAlert('Gracias por su compra!');
+    this.bd.vaciarCarrito(this.carritoId);
     this.router.navigate(['/home']);
   }
 

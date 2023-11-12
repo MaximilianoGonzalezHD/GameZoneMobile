@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DbservicioService } from '../../services/dbservicio.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { FormBuilder } from '@angular/forms';
-import { ValidatorFn,  FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-mod-producto',
@@ -19,16 +18,9 @@ export class ModProductoPage implements OnInit {
   seccion = "";
   slug = "";
 
-  form: FormGroup;
-  constructor(private bd: DbservicioService, private router: Router, private activatedrouter: ActivatedRoute, 
-    private formBuilder: FormBuilder) {
+  constructor(private bd: DbservicioService, private router: Router, private activatedrouter: ActivatedRoute, ) {
     
-      this.form = this.formBuilder.group({
-        nombre: ['', Validators.compose([Validators.required])],
-        descripcion: ['', Validators.compose([Validators.required])],
-        precio: ['', Validators.compose([Validators.required])],
-        seccion: ['', Validators.required],
-      });
+
 
 
       this.activatedrouter.queryParams.subscribe(param=>{
@@ -70,9 +62,7 @@ editar(){
     this.bd.presentAlert('La descripción debe tener entre 10 y 500 caracteres.');
     return; 
   }
-  if (!this.form.valid) {
-    this.bd.presentAlert('Error en el formulario: Debe ingresar todos los datos');
-  }
+
 
   if (!this.seccion) {
     this.bd.presentAlert('Debes seleccionar una sección.');

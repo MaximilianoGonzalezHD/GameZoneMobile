@@ -43,7 +43,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col><ion-button color="light" [routerLink]="['/carrito']" expand="full">Añadir Al
+      <ion-col><ion-button color="light" (click)="agregarAlCarrito(videojuego.id_juego)" expand="full">Añadir Al
           Carrito</ion-button></ion-col>
       <ion-col><ion-button color="light" expand="full">Comprar</ion-button></ion-col>
     </ion-row>

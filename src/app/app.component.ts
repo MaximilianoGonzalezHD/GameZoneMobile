@@ -14,6 +14,10 @@ export class AppComponent {
   constructor(public loadingService: LoadingService, public router: Router, private bd: DbservicioService) {
     this.userRole = localStorage.getItem('userRole');
     this.userId = localStorage.getItem('userId');
+    if(!this.userRole){
+      this.bd.setItem('userId', "null");
+      this.bd.setItem('userRole', "null");
+    }
   }
 
   hasUserRole(role: string): boolean {

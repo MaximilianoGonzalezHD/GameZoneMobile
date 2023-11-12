@@ -33,7 +33,7 @@
         </ion-item>
         <ion-item>
         <div>
-          <ion-label for="NombreOpcional" class="form-label" position="floating" >Nombre Opcional (Opcional)</ion-label>
+          <ion-label for="NombreOpcional" class="form-label" position="floating" >Nombre (Opcional)</ion-label>
           <ion-input type="text" class="form-control" id="NombreOpcional" NombreOpcional="NombreOpcional" [(ngModel)]="nombreuop" required formControlName="NombreOpcional"></ion-input>
           <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
           <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['minlength']" class="alert alert-danger">Min 5 caracteres...</div>

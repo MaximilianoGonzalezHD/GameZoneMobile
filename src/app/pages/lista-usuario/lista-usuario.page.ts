@@ -8,7 +8,7 @@ import { DbservicioService } from '../../services/dbservicio.service';
   styleUrls: ['./lista-usuario.page.scss'],
 })
 export class ListaUsuarioPage implements OnInit {
-  nombre_rol = "";
+
 
   usuario_list = [
     {
@@ -25,13 +25,11 @@ export class ListaUsuarioPage implements OnInit {
   constructor(private bd: DbservicioService, public router: Router) { }
 
   ngOnInit() {
-    console.log(this.usuario_list[0]);
-    console.log(this.nombre_rol)
-
     this.bd.dbState().subscribe(res => {
       if (res) {
         this.bd.fetchusuario().subscribe(item => {
           this.usuario_list = item;
+ 
         }
 
         )
@@ -39,13 +37,7 @@ export class ListaUsuarioPage implements OnInit {
     }
     );
 
-    this.usuario_list.forEach(usuario => {
-      if (usuario.rol_id === '1') {
-        this.nombre_rol = 'Usuario';
-      } else if (usuario.rol_id === '2') {
-        this.nombre_rol = 'Administrador';
-      }
-    });
+
     
   }
   eliminar(x: any){

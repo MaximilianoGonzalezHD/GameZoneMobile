@@ -19,6 +19,7 @@ export class RegisterPage implements OnInit {
   idusuario: any = "";
   correou: any = "";
   nombreu: any = "";
+  rutu: any = "";
   contrau: any = "";
   nombreuop: any = "";
   rol: any = "1";
@@ -33,15 +34,34 @@ export class RegisterPage implements OnInit {
       this.formularioRegistro = this.fb.group({
         'nombre': [
           '',
-          [Validators.required, Validators.minLength(5), Validators.maxLength(20)]
+          [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(20)
+          ]
         ],
         'NombreOpcional': [
           '',
-          [firstUppercase,Validators.minLength(2),Validators.maxLength(15)]
+          [
+            firstUppercase,
+            Validators.minLength(2),
+            Validators.maxLength(15)
+          ]
         ],
         'correo': [
           '',
-          [Validators.required, Validators.email]
+          [
+            Validators.required,
+            Validators.email
+          ]
+        ],
+        'rut': [
+          '',
+          [
+            Validators.required,
+            validarDV,
+            validarFormatoRut
+          ]
         ],
         'password': [
           '',
@@ -49,12 +69,15 @@ export class RegisterPage implements OnInit {
             Validators.required,
             Validators.minLength(5),
             Validators.maxLength(30),
-            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+            Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9  !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~€£¥₩])(?=.*?[A-Z 0-9]).{8,}$")
           ]
         ],
         'confirmacionPassword': [
           '',
-          [Validators.required, passwordMatchValidator]
+          [
+            Validators.required,
+            passwordMatchValidator
+          ]
         ]
       });
   }
@@ -86,6 +109,7 @@ export class RegisterPage implements OnInit {
   }
 } 
 
+
   export function passwordMatchValidator(control: AbstractControl) {
   const password = control.get('password');
   const confirmPassword = control.get('confirmacionPassword');
@@ -110,4 +134,19 @@ export class RegisterPage implements OnInit {
     }
   }
   return null;
+  
 }
+
+/** @internal */
+export const validarFormatoRut = (rut: string) => {
+  const validRegex = /^([0-9]{1,3}(\.[0-9]{3})*|[0-9]{1,3}(,[0-9]{3})*|[0-9]+)-(k|K|[0-9])$/;
+  return validRegex.test(rut);
+};
+
+
+/** @internal */
+export const validarDV = (checkDigit: string) => {
+  const validRegex = /^(k|K|[0-9])$/;
+  return validRegex.test(checkDigit);
+};
+

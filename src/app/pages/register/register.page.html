@@ -23,6 +23,14 @@
         </div>
         </ion-item>
         <ion-item>
+          <div>  
+            <ion-label for="rut" class="form-label" position="floating">Rut</ion-label>
+            <ion-input type="text" class="form-control" id="rut" rut="rut" [(ngModel)]="rutu" required formControlName="rut"></ion-input>
+            <div *ngIf=" formularioRegistro.get('rut')?.touched && formularioRegistro.get('rut')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+            <div *ngIf=" formularioRegistro.get('rut')?.touched && formularioRegistro.get('rut')?.errors?.['validarRut']" class="alert alert-danger">Rut invalido</div>
+          </div>
+          </ion-item>
+        <ion-item>
         <div>
           <ion-label for="nombre" class="form-label" position="floating">Nombre de usuario</ion-label>
           <ion-input type="text" class="form-control" id="nombre" nombre="nombre" [(ngModel)]="nombreu" required formControlName="nombre"></ion-input>

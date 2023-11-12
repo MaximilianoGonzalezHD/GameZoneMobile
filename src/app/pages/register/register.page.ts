@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AbstractControl } from '@angular/forms';
 import { DbTransaction } from '@awesome-cordova-plugins/sqlite/ngx';
 import { DbservicioService } from '../../services/dbservicio.service';
+import { validateRut } from '@fdograph/rut-utilities';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,7 @@ export class RegisterPage implements OnInit {
   idusuario: any = "";
   correou: any = "";
   nombreu: any = "";
+  rutu: String = "";
   contrau: any = "";
   nombreuop: any = "";
   rol: any = "1";
@@ -26,6 +28,8 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private router: Router,
+    private transaccion: DbTransaction,
+    private rutverify: validateRut,
     public fb: FormBuilder,
     private db: DbservicioService,
     private toastController: ToastController,
@@ -33,15 +37,33 @@ export class RegisterPage implements OnInit {
       this.formularioRegistro = this.fb.group({
         'nombre': [
           '',
-          [Validators.required, Validators.minLength(5), Validators.maxLength(20)]
+          [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(20)
+          ]
         ],
         'NombreOpcional': [
           '',
-          [firstUppercase,Validators.minLength(2),Validators.maxLength(15)]
+          [
+            firstUppercase,
+            Validators.minLength(2),
+            Validators.maxLength(15)
+          ]
         ],
         'correo': [
           '',
-          [Validators.required, Validators.email]
+          [
+            Validators.required,
+            Validators.email
+          ]
+        ],
+        'rut': [
+          '',
+          [
+            Validators.required,
+            Validators.validarRut
+          ]
         ],
         'password': [
           '',
@@ -86,6 +108,7 @@ export class RegisterPage implements OnInit {
   }
 } 
 
+
   export function passwordMatchValidator(control: AbstractControl) {
   const password = control.get('password');
   const confirmPassword = control.get('confirmacionPassword');
@@ -101,6 +124,11 @@ export class RegisterPage implements OnInit {
   return null; 
 }
 
+  validarRut(rutu: any): {
+  const rutRegex = /^\d{1,2}\.\d{3}\.\d{3}-\d{1,2}$/;
+  return rutRegex.test(rutu);
+}
+
  function firstUppercase(control: FormControl) {
   const value = control.value;
   if (value && value.length > 0) {
@@ -110,4 +138,5 @@ export class RegisterPage implements OnInit {
     }
   }
   return null;
+  
 }

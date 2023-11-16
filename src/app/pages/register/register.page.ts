@@ -137,16 +137,13 @@ export class RegisterPage implements OnInit {
   
 }
 
-/** @internal */
 export const validarFormatoRut = (rut: string) => {
   const validRegex = /^([0-9]{1,3}(\.[0-9]{3})*|[0-9]{1,3}(,[0-9]{3})*|[0-9]+)-(k|K|[0-9])$/;
   return validRegex.test(rut);
 };
 
-
-/** @internal */
-export const validarDV = (checkDigit: string) => {
+export const validarDV = (rut: string) => {
   const validRegex = /^(k|K|[0-9])$/;
-  return validRegex.test(checkDigit);
+  return validRegex.test(rut);
 };
 

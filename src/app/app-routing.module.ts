@@ -105,16 +105,7 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/error/error.module').then( m => m.ErrorPageModule)
   },
-  {
-    path: 'apiuser',
-    loadChildren: () => import('./apiuser/apiuser.module').then( m => m.ApiuserPageModule)
-  },
-  {
-    path: 'apiperfil/:id',
-    loadChildren: () => import('./apiperfil/apiperfil.module').then( m => m.ApiperfilPageModule)
-  },
 
- 
 
 
 

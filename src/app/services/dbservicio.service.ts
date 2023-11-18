@@ -541,7 +541,7 @@ async obtenerIdCompraGenerica(rut: string): Promise<number> {
 
 obtenerIdCompra(usuarioId: string | null | number): Promise<number> {
   return this.database.executeSql(
-    'SELECT id_comprac FROM compra WHERE usuario_id = ? AND fechac = ?',
+    'SELECT id_comprac FROM compra WHERE usuario_id = ?',
     [usuarioId]
   )
     .then((res) => {

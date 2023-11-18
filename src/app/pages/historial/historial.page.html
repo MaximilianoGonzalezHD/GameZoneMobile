@@ -15,7 +15,9 @@
           <h1 class="neon-rgb">Historial De Compras</h1>
         </ion-col>
       </ion-row>
-      <ion-row>
+
+      <!-- Verifica si hay compras antes de mostrar la lista -->
+      <ion-row *ngIf="compras && compras.length > 0">
         <ion-col>
           <ion-list lines="none" class="custom-table">
             <ion-item class="header-row">
@@ -24,15 +26,27 @@
               <ion-label class="centrado">Subtotal</ion-label>
               <ion-label class="centrado">Total</ion-label>
             </ion-item>
+
+            <!-- Utiliza *ngFor para recorrer los detalles de cada compra -->
             <ion-item *ngFor="let detalle of detalles">
               <ion-label class="centrado">{{ detalle.videojuego.nombrev }}</ion-label>
               <ion-label class="centrado">{{ detalle.cantidad }}</ion-label>
               <ion-label class="centrado">{{ detalle.subtotal | precioClp }}</ion-label>
               <ion-label class="centrado">{{ totalCompra | precioClp }}</ion-label>
             </ion-item>
+            <ion-row *ngIf="!(compras && compras.length > 0)">
+              <ion-col>
+                <p>No hay juegos comprados</p>
+              </ion-col>
+            </ion-row>
           </ion-list>
         </ion-col>
       </ion-row>
-    </ion-grid>
+
+      <!-- Muestra un mensaje si no hay compras -->
+
+
+      </ion-grid>
+    
   </div>
 </ion-content>

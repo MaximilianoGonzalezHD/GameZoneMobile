@@ -46,8 +46,8 @@
           <ion-input type="text" class="form-control" id="NombreOpcional" NombreOpcional="NombreOpcional" [(ngModel)]="nombreuop" required formControlName="NombreOpcional"></ion-input>
           <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
           <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['firstUppercase']" class="alert alert-danger">La primera letra debe ser en mayuscula...</div>
-          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['minlength']" class="alert alert-danger">Min 5 caracteres...</div>
-          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['maxlength']" class="alert alert-danger">Max 20 caracteres...</div>
+          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['minlength']" class="alert alert-danger">Min 2 caracteres...</div>
+          <div *ngIf=" formularioRegistro.get('NombreOpcional')?.touched && formularioRegistro.get('NombreOpcional')?.errors?.['maxlength']" class="alert alert-danger">Max 15 caracteres...</div>
         </div>
         </ion-item>
         <ion-item>

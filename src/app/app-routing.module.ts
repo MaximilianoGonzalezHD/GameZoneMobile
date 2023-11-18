@@ -102,9 +102,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/lista-usuario/lista-usuario.module').then( m => m.ListaUsuarioPageModule)
   },
   {
+    path: 'apiusuarios',
+    loadChildren: () => import('./pages/apiusuarios/apiusuarios.module').then( m => m.ApiusuariosPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/error/error.module').then( m => m.ErrorPageModule)
   },
+
+
 
 
 

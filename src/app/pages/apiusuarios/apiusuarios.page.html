@@ -12,17 +12,17 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <h1 class="neon-rgb">Historial De Compras</h1>
+        <h1 class="neon-rgb centrado">Personajes Rick And Morty</h1>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-list lines="none" class="custom-table">
-          <ion-item class="header-row">
-            <ion-label class="centrado">Nombre</ion-label>
-          </ion-item>
           <ion-item *ngFor="let elemento of character.results">
-            <ion-label class="centrado">{{ elemento.name }}</ion-label>
+            <ion-avatar slot="start">
+              <img src="{{ elemento.image }}">
+            </ion-avatar>
+            <ion-label class="start">{{ elemento.name }}</ion-label>
           </ion-item>
         </ion-list>
       </ion-col>

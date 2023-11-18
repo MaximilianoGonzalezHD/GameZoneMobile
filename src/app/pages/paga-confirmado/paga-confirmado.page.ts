@@ -21,6 +21,7 @@ export class PagaConfirmadoPage implements OnInit {
       nombreu: '',
       imagenu: '',
       rol_id: '',
+      rut: '',
     }
   ]
 

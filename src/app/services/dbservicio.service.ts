@@ -23,7 +23,7 @@ import { Router } from '@angular/router';
 
 export class DbservicioService {
   rol: string = "CREATE TABLE IF NOT EXISTS rol (id_rolr INTEGER PRIMARY KEY, nombrer VARCHAR(10));";
-  usuario: string = "CREATE TABLE IF NOT EXISTS usuario (id_usuariou INTEGER PRIMARY KEY, emailu VARCHAR(30), nombre_usuariou VARCHAR(30)  NOT NULL, contrasenau VARCHAR(30) NOT NULL, nombreu VARCHAR(15), imagenu BLOB, rol_id INTEGER, FOREIGN KEY (rol_id) REFERENCES rol(id_rolr));";
+  usuario: string = "CREATE TABLE IF NOT EXISTS usuario (id_usuariou INTEGER PRIMARY KEY, emailu VARCHAR(30), nombre_usuariou VARCHAR(30)  NOT NULL, contrasenau VARCHAR(30) NOT NULL, nombreu VARCHAR(15), imagenu BLOB, rol_id INTEGER, rut VARCHAR(20), FOREIGN KEY (rol_id) REFERENCES rol(id_rolr));";
   seccion: string = "CREATE TABLE IF NOT EXISTS seccion (id_seccions INTEGER PRIMARY KEY, nombres VARCHAR(30));";
   juego: string = "CREATE TABLE IF NOT EXISTS videojuegos (id_juego INTEGER PRIMARY KEY, nombrev VARCHAR(50) NOT NULL, descripcion VARCHAR(500)  NOT NULL, precio REAL NOT NULL, imagenv BLOB  NOT NULL, seccion_id INTEGER NOT NULL, slug VARCHAR(50) UNIQUE, FOREIGN KEY (seccion_id) REFERENCES seccion(id_seccions));";
   compra: string = "CREATE TABLE IF NOT EXISTS compra (id_comprac INTEGER PRIMARY KEY, fechac DATE, rutc VARCHAR(20), totalc INTEGER, usuario_id INTEGER,FOREIGN KEY (usuario_id) REFERENCES usuario (id_usuariou));";
@@ -39,7 +39,7 @@ export class DbservicioService {
   rol1: string = "INSERT or IGNORE INTO rol(id_rolr, nombrer) VALUES(1, 'Usuario');";
   rol2: string = "INSERT or IGNORE INTO rol(id_rolr, nombrer) VALUES(2, 'Administrador');";
   carrito_generico: string = "INSERT or IGNORE  INTO  carrito (id_carrito, usuario_id) VALUES (1, NULL)";
-  admin: string = "INSERT or IGNORE INTO usuario (id_usuariou,emailu,nombre_usuariou,contrasenau,rol_id) VALUES(1,'admin@admin.cl', 'adminfirst','admin123',2)";
+  admin: string = "INSERT or IGNORE INTO usuario (id_usuariou,emailu,nombre_usuariou,contrasenau,rol_id, rut) VALUES(1,'admin@admin.cl', 'adminfirst','admin123',2, '12345678-9')";
 
   constructor(private router: Router, private alertController: AlertController, private sqlite: SQLite, private platform: Platform) {
     this.createDatabase();
@@ -523,14 +523,14 @@ async crearCompraGenerica(rut: string, total: any): Promise<number> {
       throw error;
     });
 }
-async obtenerIdCompraGenerica(rut: string, fechaCompra: Date): Promise<number> {
+async obtenerIdCompraGenerica(rut: string): Promise<number> {
   return this.database
-    .executeSql('SELECT id_comprac FROM compra WHERE rutc = ? AND fechac = ?', [rut, fechaCompra])
+    .executeSql('SELECT id_comprac FROM compra WHERE rutc = ?', [rut])
     .then((res) => {
       if (res.rows.length > 0) {
         return res.rows.item(0).id_comprac;
       } else {
-        return 0; // Si no se encontró la compra, retorna 0 o algún otro valor que indique un error
+        return 0;
       }
     })
     .catch((error) => {
@@ -548,7 +548,7 @@ obtenerIdCompra(usuarioId: string | null | number): Promise<number> {
       if (res.rows.length > 0) {
         return res.rows.item(0).id_comprac;
       } else {
-        return 0; // Si no se encontró la compra, retorna 0 o algún otro valor que indique un error
+        return 0;
       }
     })
     .catch(error => {
@@ -632,7 +632,10 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
 
   //crud usuario
   buscarUsuario(): Promise<Usuario[]> {
+    
+    console.log('Antes de ejecutar la consulta SQL');
     return this.database.executeSql('SELECT * FROM usuario', []).then(res => {
+    console.log('Después de ejecutar la consulta SQL');
       let items: Usuario[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
@@ -644,11 +647,15 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
             nombreu: res.rows.item(i).nombreu,
             imagenu: res.rows.item(i).imagenu,
             rol_id: res.rows.item(i).rol_id,
+            rut: res.rows.item(i).rut,
           })
         }
       }
       this.listaUsuario.next(items as any);
       return items;
+    }).catch(error => {
+      console.error('Error al buscar usuarios:', error);
+      throw error;
     });
   }
 
@@ -669,6 +676,7 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
               nombreu: res.rows.item(i).nombreu,
               imagenu: res.rows.item(i).imagenu,
               rol_id: res.rows.item(i).rol_id,
+              rut: res.rows.item(i).rut,
             });
           }
         }
@@ -680,10 +688,10 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
   }
 
   
-  agregarUsuario( emailu: any, nombre_usuariou: any, contrasenau: any, nombreu: any, rol_id: any){
-    return this.database.executeSql('INSERT INTO usuario( emailu, nombre_usuariou, contrasenau, nombreu, rol_id) VALUES(?,?,?,?,?)',[ emailu, nombre_usuariou, contrasenau, nombreu, rol_id]).then(res =>{
+  agregarUsuario(emailu: any, nombre_usuariou: any, contrasenau: any, nombreu: any, rol_id: any, rut: any) {
+    return this.database.executeSql('INSERT INTO usuario(emailu, nombre_usuariou, contrasenau, nombreu, rol_id, rut) VALUES(?,?,?,?,?,?)', [emailu, nombre_usuariou, contrasenau, nombreu, rol_id, rut]).then(res => {
       this.buscarUsuario();
-    })
+    });
   }
 
 
@@ -711,22 +719,18 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
     })
   }
 
-  async autenticarUsuario(email: string, contraseña: string): Promise<boolean> {
+  async autenticarUsuario(email: string, contrasena: string): Promise<boolean> {
     try {
       const normalizedEmail = email.toLowerCase();
       const result = await this.database.executeSql(
         'SELECT * FROM usuario WHERE LOWER(emailu) = ? AND contrasenau = ?',
-        [normalizedEmail, contraseña]
+        [normalizedEmail, contrasena]
       );
   
-      if (result.rows.length > 0) {
-        return true; 
-      }
-  
-      return false; 
+      return result.rows.length > 0;
     } catch (error) {
       console.error('Error al autenticar el usuario:', error);
-      throw error;
+      return false;
     }
   }
 

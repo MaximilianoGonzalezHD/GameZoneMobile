@@ -6,4 +6,5 @@ export class Usuario{
     nombreu = "";
     imagenu = "";
     rol_id = "";
+    rut = "";
 }

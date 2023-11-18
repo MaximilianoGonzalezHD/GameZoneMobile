@@ -97,7 +97,7 @@ export class RegisterPage implements OnInit {
       await alert.present();
       return;
     } else  {
-      this.db.agregarUsuario(this.correou,this.nombreu,this.contrau,this.nombreuop,this.rol);
+      this.db.agregarUsuario(this.correou,this.nombreu,this.contrau,this.nombreuop,this.rol,this.rutu);
       const toast = await this.toastController.create({
         message: 'Registrado Correctamente',
         duration: 1500,

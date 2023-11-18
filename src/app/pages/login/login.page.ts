@@ -18,6 +18,7 @@ export class LoginPage {
       contrasenau: '',
       nombreu: '',
       rol_id: '',
+      rut: '',
     }
 ]
 
@@ -41,25 +42,24 @@ password: string = '';
   async login() {
     const email = this.email;
     const contraseña = this.password;
-
-    const id  = await this.bd.obtenerIdUsuarioPorEmail(email);
+  
+    const id = await this.bd.obtenerIdUsuarioPorEmail(email);
     const rol = await this.bd.obtenerRolUsuarioPorEmail(email);
-
+  
     if (email.trim() === '' || contraseña.trim() === '') {
       this.bd.presentAlert('Por favor, complete ambos campos.');
       return;
     }
-
+  
     try {
       const isAuthenticated = await this.bd.autenticarUsuario(email, contraseña);
-
+  
       if (isAuthenticated) {
         this.bd.setItem('userId', id);
         this.bd.setItem('userRole', rol);
         this.bd.crearCarrito(id);
-        this.bd.presentAlert('se ha ingresado con exito!');
+        this.bd.presentAlert('Se ha ingresado con éxito!');
         this.router.navigate(['/home']);
-        
       } else {
         this.bd.presentAlert('Usuario no existe o contraseña incorrecta.');
       }

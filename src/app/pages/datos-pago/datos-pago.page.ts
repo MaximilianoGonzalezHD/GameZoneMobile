@@ -10,10 +10,23 @@ import { CarritoItem } from '../../interfaces/carrito-item';
 export class DatosPagoPage implements OnInit {
   correo: string = '';
   rut: string = '';
+  rutAuth: string = '';
   carritoId: number;
   userId: string | null | number;
   totalCarrito: number = 0;
   carrito: CarritoItem[] = [];
+  usuario_list = [
+    {
+      id_usuariou: '',
+      emailu: '',
+      nombre_usuariou: '',
+      contrasenau: '',
+      nombreu: '',
+      imagenu: '',
+      rol_id: '',
+      rut: '',
+    }
+  ]
 
   constructor(private bd: DbservicioService) {
     this.userId = localStorage.getItem('userId');
@@ -35,6 +48,21 @@ export class DatosPagoPage implements OnInit {
       this.carrito = carrito;
       this.actualizarTotalCarrito();
     });
+
+    this.bd.dbState().subscribe(res => {
+      if (res) {
+
+          this.bd.buscarUsuarioPorId(this.userId)
+            .then(item => {
+              this.usuario_list = item;
+              console.log('Datos del usuario:', this.usuario_list);
+            })
+            .catch(error => {
+              console.error('Error al buscar el usuario:', error);
+            });
+      }
+    }
+    )
   }
   comprar() {
     if (!this.userId) {
@@ -51,7 +79,10 @@ export class DatosPagoPage implements OnInit {
   }
 
   comprarconusuario() {
-    this.bd.procesarCompraRegistrado(this.rut, this.userId, this.totalCarrito);
+    if(!this.rutAuth){
+      this.rutAuth = this.usuario_list[0].rut;
+    }
+    this.bd.procesarCompraRegistrado(this.rutAuth, this.userId, this.totalCarrito);
   }
 
   actualizarTotalCarrito() {

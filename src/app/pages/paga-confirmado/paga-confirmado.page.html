@@ -17,13 +17,13 @@
         <ion-label>Fecha:</ion-label>
         <ion-label>{{ compra.fechac }}</ion-label>
       </ion-item>
-      <ion-item *ngIf="usuario_list">
+      <ion-item >
         <ion-label>Usuario:</ion-label>
         <ion-label>{{ usuario_list[0].nombre_usuariou }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label>RUT:</ion-label>
-        <ion-label>{{ compra.rutc }}</ion-label>
+        <ion-label>{{ usuario_list[0].rut }}</ion-label>
       </ion-item>
       <ion-item>
         <ion-label>Correo: </ion-label>

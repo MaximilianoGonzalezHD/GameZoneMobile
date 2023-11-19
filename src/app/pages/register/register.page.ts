@@ -104,6 +104,7 @@ export class RegisterPage implements OnInit {
         position: 'bottom',
       });
       await toast.present()
+      this.formularioRegistro.reset()
       this.router.navigateByUrl("/login");
     }
   }

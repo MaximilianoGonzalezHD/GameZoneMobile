@@ -5,8 +5,11 @@ import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 
 describe('DbservicioService', () => {
   let service: DbservicioService;
-
+  TestBed.configureTestingModule({
+    providers: [SQLite]
+  }).compileComponents();
   beforeEach(() => {
+    
     service = TestBed.inject(DbservicioService);
   });
 

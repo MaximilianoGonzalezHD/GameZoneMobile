@@ -631,9 +631,10 @@ async obtenerDetallesCompraPorId(usuarioid: number | string | null): Promise<any
   console.log('Entrando en obtenerDetallesCompraPorId');
   try {
     const res = await this.database.executeSql(`
-      SELECT d.*, c.* 
+      SELECT d.*, c.*,v.*
       FROM detallesc d 
       JOIN compra c ON c.id_comprac = d.compra_id
+      JOIN videojuegos v on d.videojuego_id = v.id_juego
       WHERE c.usuario_id = ?`,
       [usuarioid]
     );
@@ -641,7 +642,10 @@ async obtenerDetallesCompraPorId(usuarioid: number | string | null): Promise<any
     const detallesCompra = [];
 
     for (let i = 0; i < res.rows.length; i++) {
-      detallesCompra.push(res.rows.item(i));
+      detallesCompra.push(res.rows.item(i)
+      
+      );
+      
     }
 
     console.log('Detalles obtenidos:', detallesCompra);
@@ -650,6 +654,7 @@ async obtenerDetallesCompraPorId(usuarioid: number | string | null): Promise<any
     console.error('Error al obtener los detalles de compra por ID de compra:', error);
     throw error;
   }
+  this.verdetalles();
 }
 
 async procesarCompraNoRegistrado(rut: string, correo: string, total: any) {
@@ -685,7 +690,9 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
   return this.database.executeSql(
     'INSERT INTO detallesc (subtotal, cantidad, videojuego_id, compra_id) VALUES (?, ?, ?, ?)',
     [subtotal, cantidad, videojuegoId, compraId]
+    
   )
+  
     .catch(error => {
       console.error('Error al agregar detalles de la compra:', error);
       throw error;

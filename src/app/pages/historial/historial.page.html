@@ -20,6 +20,7 @@
         <ion-col>
           <ion-list lines="none" class="custom-table">
             <ion-item class="header-row">
+              <ion-label class="centrado"></ion-label>
               <ion-label class="centrado">Nombre</ion-label>
               <ion-label class="centrado">Cantidad</ion-label>
               <ion-label class="centrado">Subtotal</ion-label>
@@ -27,7 +28,16 @@
             </ion-item>
 
             <ion-item *ngFor="let detalle of detalles">
-              <ion-label class="centrado">{{ detalle.juego.nombrev }}</ion-label>
+              <ion-thumbnail slot="start">
+                <img [src]="detalle.imagenv" alt="Imagen del juego">
+              </ion-thumbnail>
+              <ion-label class="centrado">
+                {{ detalle.nombrev }}
+                <p *ngIf="detalle.seccion_id == '1'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-playstation"></ion-icon><br>Playstation</p>
+                <p *ngIf="detalle.seccion_id == '2'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-xbox"></ion-icon><br>Xbox</p>
+                <p *ngIf="detalle.seccion_id == '3'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="game-controller-outline"></ion-icon><br>Nintendo</p>
+                <p *ngIf="detalle.seccion_id == '4'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-steam"></ion-icon><br>PC</p>
+              </ion-label>
               <ion-label class="centrado">{{ detalle.cantidad }}</ion-label>
               <ion-label class="centrado">{{ detalle.subtotal | precioClp }}</ion-label>
               <ion-label class="centrado">{{ detalle.totalc | precioClp }}</ion-label>

@@ -11,7 +11,26 @@ import { DetalleCompra } from '../../interfaces/Detallecompra';
 export class HistorialPage implements OnInit {
 
   totalCompra: number = 0;
-  detalles: any = [];
+  detalles = [{
+    nombrev: '',
+    descripcion: '',
+    cantidad: '',
+    imagenv: '',
+    precio: '',
+    subtotal: 0,
+    totalc: 0,
+    fechac: '',
+    seccion_id: '',
+    rutc: '',
+    usuario_id: '',
+    slug: '',
+    videojuego_id: '',
+    id_juego: '',
+    id_detallesc: '',
+    id_comprac: '',
+    compra_id: '',
+    }
+  ]
   userId: string | null | number;
 
   constructor(private bd: DbservicioService, private router: Router) {
@@ -19,15 +38,9 @@ export class HistorialPage implements OnInit {
   }
   async ngOnInit() {
     try {
-  
-      if(!this.detalles){
         this.detalles = await this.bd.obtenerDetallesCompraPorId(this.userId);
-
-  
         console.log('Detalles con juegos:', this.detalles);
-      } else {
-        console.log('No hay compras para este usuario.');
-      }
+
     } catch (error) {
       console.error('Error al cargar datos:', error);
     }

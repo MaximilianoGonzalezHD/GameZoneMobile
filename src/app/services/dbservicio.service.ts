@@ -439,6 +439,40 @@ export class DbservicioService {
     });
   }
 
+  async obtenercarro(carritoId: number): Promise<any[]> {
+    const elementosCarrito = await this.database.executeSql(
+      'SELECT v.*, i.cantidad, i.id_itemcarrito FROM videojuegos v ' +
+      'INNER JOIN itemCarrito i ON v.id_juego = i.videojuego_id ' +
+      'WHERE i.carrito_id = ?',
+      [carritoId]
+    )
+    .then((res) => {
+      const elementos = [];
+      for (let i = 0; i < res.rows.length; i++) {
+        const item = res.rows.item(i);
+        elementos.push({
+          id_juego: item.id_juego,
+          nombrev: item.nombrev,
+          descripcion: item.descripcion,
+          precio: item.precio,
+          imagenv: item.imagenv,
+          seccion_id: item.seccion_id,
+          slug: item.slug,
+          cantidad: item.cantidad,
+          id_itemcarrito: item.id_itemcarrito,
+          total: 0 
+        });
+      }
+      return elementos;
+    })
+    .catch(error => {
+      console.error('Error al obtener elementos del carrito:', error);
+      throw error;
+    });
+  
+    return elementosCarrito; 
+  }
+
   vaciarCarrito(carritoId: number): Promise<void> {
     return this.database.executeSql('DELETE FROM itemCarrito WHERE carrito_id = ?', [carritoId])
       .then(() => {
@@ -556,49 +590,76 @@ obtenerIdCompra(usuarioId: string | null | number): Promise<number> {
       throw error;
     });
 }
-async obtenerComprasPorUsuario(usuarioId: number | null | string): Promise<any[]> {
+
+async obtenerIdUltimaCompra(usuarioId: string | null | number): Promise<number> {
   return this.database.executeSql(
-    'SELECT * FROM compra WHERE usuario_id = ?',
+    'SELECT id_comprac FROM compra WHERE usuario_id = ? ORDER BY id_comprac DESC LIMIT 1',
     [usuarioId]
   )
   .then((res) => {
-    const compras = [];
-    for (let i = 0; i < res.rows.length; i++) {
-      compras.push(res.rows.item(i));
-      
+    if (res.rows.length > 0) {
+      return res.rows.item(0).id_comprac;
+    } else {
+      return null; 
     }
-    return compras;
   })
   .catch(error => {
-    console.error('Error al obtener las compras por usuario:', error);
+    console.error('Error al obtener el ID de la última compra:', error);
     throw error;
   });
 }
-async obtenerDetallesCompraPorId(compraId: number): Promise<any[]> {
-  return this.database.executeSql(
-    'SELECT * FROM detallesc WHERE compra_id = ?',
-    [compraId]
-  )
-  .then((res) => {
+
+async obtenerComprasPorUsuario(usuarioId: number | null | string): Promise<any[]> {
+  console.log('Entrando en obtenerComprasPorUsuario');
+  try {
+    const res = await this.database.executeSql('SELECT * FROM compra WHERE usuario_id = ?', [usuarioId]);
+    const compras = [];
+    
+    for (let i = 0; i < res.rows.length; i++) {
+      compras.push(res.rows.item(i));
+    }
+
+    console.log('Compras obtenidas:', compras);
+    return compras;
+  } catch (error) {
+    console.error('Error al obtener las compras por usuario:', error);
+    throw error;
+  }
+}
+
+async obtenerDetallesCompraPorId(usuarioid: number | string | null): Promise<any[]> {
+  console.log('Entrando en obtenerDetallesCompraPorId');
+  try {
+    const res = await this.database.executeSql(`
+      SELECT d.*, c.* 
+      FROM detallesc d 
+      JOIN compra c ON c.id_comprac = d.compra_id
+      WHERE c.usuario_id = ?`,
+      [usuarioid]
+    );
+
     const detallesCompra = [];
+
     for (let i = 0; i < res.rows.length; i++) {
       detallesCompra.push(res.rows.item(i));
     }
+
+    console.log('Detalles obtenidos:', detallesCompra);
     return detallesCompra;
-  })
-  .catch(error => {
+  } catch (error) {
     console.error('Error al obtener los detalles de compra por ID de compra:', error);
     throw error;
-  });
+  }
 }
 
 async procesarCompraNoRegistrado(rut: string, correo: string, total: any) {
   const compraId = await this.crearCompraGenerica(rut,total);
-  const carritoId = 1; // Puedes cambiar esto según tu lógica
-  const elementosCarrito = await this.obtenerItemsDelCarrito(carritoId);
+  const carritoId = 1; 
+  const elementosCarrito =  await this.obtenercarro(carritoId);
+  const Idcompra  = await this.obtenerIdCompraGenerica(rut);
 
   for (const elemento of elementosCarrito) {
-    await this.agregarDetalleCompra(compraId, elemento.videojuego_id, elemento.cantidad, elemento.precio);
+    await this.agregarDetalleCompra(Idcompra, elemento.id_juego, elemento.cantidad, elemento.precio);
   }
 
   await this.vaciarCarrito(carritoId);
@@ -609,12 +670,13 @@ async procesarCompraNoRegistrado(rut: string, correo: string, total: any) {
 }
 
 async procesarCompraRegistrado(rut: string, usuarioId: string | null | number, total: any) {
-  const compraId = await this.crearCompra(rut, usuarioId, total);
+  const compra = await this.crearCompra(rut, usuarioId, total);
   const carritoId = await this.obtenerIdCarritoDeUsuario(usuarioId);
-  const elementosCarrito = await this.obtenerItemsDelCarrito(carritoId);
+  const elementosCarrito = await this.obtenercarro(carritoId);
+  const Idcompra  = await this.obtenerIdUltimaCompra(usuarioId);
 
   for (const elemento of elementosCarrito) {
-    await this.agregarDetalleCompra(compraId, elemento.videojuego_id, elemento.cantidad, elemento.precio);
+    await this.agregarDetalleCompra(Idcompra, elemento.id_juego, elemento.cantidad, elemento.precio);
   }
 
   this.router.navigate(['/paga-confirmado']); 
@@ -628,6 +690,34 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
       console.error('Error al agregar detalles de la compra:', error);
       throw error;
     });
+    this.verdetalles();
+}
+
+verdetalles() {
+  return this.database.executeSql('SELECT * FROM detallesc', []).then(res => {
+    // Variable para almacenar los registros
+    let items: DetallesC[] = [];
+    // Validamos la cantidad de registros
+    if (res.rows.length > 0) {
+      // Recorrer el resultado
+      for (var i = 0; i < res.rows.length; i++) {
+        // Guardar dentro de la variable
+        items.push({
+          id_detallesc: res.rows.item(i).id_detallesc,
+          subtotal: res.rows.item(i).subtotal,
+          cantidad: res.rows.item(i).cantidad,
+          videojuego_id: res.rows.item(i).videojuego_id,
+          compra_id: res.rows.item(i).compra_id,
+        });
+      }
+    }
+    // Actualizamos el observable
+    this.listaDetalles.next(items as any);
+    console.log(items);
+    if (items.length === 0) {
+      console.log("No se encontraron detalles en la base de datos.");
+    }
+  });
 }
 
   //crud usuario
@@ -822,7 +912,7 @@ agregarDetalleCompra(compraId: number, videojuegoId: number, cantidad: number, s
       this.buscarJuegoXbox();
       this.buscarUsuario();
       this.buscarJuegoPc();
-  
+      this.verdetalles();
     } catch (error) {
       this.presentAlert("Error al crear tablas" + error);
       console.error('Error al crear tablas:', error);

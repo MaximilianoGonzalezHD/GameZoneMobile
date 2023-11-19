@@ -1,9 +1,9 @@
-<ion-header >
+<ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button color="primary" name="menu"></ion-menu-button>
     </ion-buttons>
-    <ion-title class="centrado"> GameZone </ion-title>
+    <ion-title class="centrado">GameZone</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,8 +16,7 @@
         </ion-col>
       </ion-row>
 
-      <!-- Verifica si hay compras antes de mostrar la lista -->
-      <ion-row *ngIf="compras && compras.length > 0">
+      <ion-row>
         <ion-col>
           <ion-list lines="none" class="custom-table">
             <ion-item class="header-row">
@@ -27,14 +26,14 @@
               <ion-label class="centrado">Total</ion-label>
             </ion-item>
 
-            <!-- Utiliza *ngFor para recorrer los detalles de cada compra -->
             <ion-item *ngFor="let detalle of detalles">
-              <ion-label class="centrado">{{ detalle.videojuego.nombrev }}</ion-label>
+              <ion-label class="centrado">{{ detalle.juego.nombrev }}</ion-label>
               <ion-label class="centrado">{{ detalle.cantidad }}</ion-label>
               <ion-label class="centrado">{{ detalle.subtotal | precioClp }}</ion-label>
-              <ion-label class="centrado">{{ totalCompra | precioClp }}</ion-label>
+              <ion-label class="centrado">{{ detalle.totalc | precioClp }}</ion-label>
             </ion-item>
-            <ion-row *ngIf="!(compras && compras.length > 0)">
+
+            <ion-row *ngIf="!(detalles && detalles.length > 0)">
               <ion-col>
                 <p>No hay juegos comprados</p>
               </ion-col>
@@ -42,11 +41,6 @@
           </ion-list>
         </ion-col>
       </ion-row>
-
-      <!-- Muestra un mensaje si no hay compras -->
-
-
-      </ion-grid>
-    
+    </ion-grid>
   </div>
 </ion-content>

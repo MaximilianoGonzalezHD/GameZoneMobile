@@ -78,7 +78,7 @@ export class CambiarContrasenaSegPage implements OnInit {
     if ( this.usuario_list) {  // Verificar que userId y usuario_list no sean null
       this.bd.actualizarcontrasena(this.usuario_list[0].id_usuariou, this.contrau);
       this.bd.presentAlert('Se ha modificado la contraseña.');
-      this.router.navigate(['/perfil']);
+      this.router.navigate(['/login']);
     } else {
       console.error('Error: userId o usuario_list es null.');
       this.bd.presentAlert('Error al actualizar la contraseña.');

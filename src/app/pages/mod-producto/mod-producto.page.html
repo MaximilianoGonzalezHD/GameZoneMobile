@@ -37,6 +37,15 @@
     <ion-input type="text" value="precio" [(ngModel)]="precio" ></ion-input>
     </ion-item>
     
+    <ion-item>
+      <ion-label position="stacked">Sección</ion-label>
+      <ion-select [(ngModel)]="seccion">
+        <ion-select-option value="1">Playstation</ion-select-option>
+        <ion-select-option value="2">Xbox</ion-select-option>
+        <ion-select-option value="3">Nintendo</ion-select-option>
+        <ion-select-option value="4">PC</ion-select-option>
+      </ion-select>
+    </ion-item>
 
   <ion-button shape="block" (click)="editar()">Guardar Cambio</ion-button>
 </ion-content>

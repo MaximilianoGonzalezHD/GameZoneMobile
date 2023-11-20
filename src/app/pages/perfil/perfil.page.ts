@@ -29,7 +29,6 @@ export class PerfilPage implements OnInit {
   ngOnInit() {
     this.bd.dbState().subscribe(res => {
       if (res) {
-
           this.bd.buscarUsuarioPorId(this.userId)
             .then(item => {
               this.usuario_list = item;

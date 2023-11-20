@@ -38,45 +38,54 @@ export class ModProductoPage implements OnInit {
 
   ngOnInit() {
   }
-editar(){
-  if (this.nombre.length < 3 || this.nombre.length > 20) {
-    this.bd.presentAlert('El nombre del juego debe tener entre 3 y 20 caracteres.');
-    return; 
-  }
-
-  const parsedPrice = parseFloat(this.precio);
-  if (isNaN(parsedPrice) || parsedPrice < 0) {
-    this.bd.presentAlert('El precio debe ser un número positivo.');
-    return; 
-  }
-  const zero = parseFloat(this.precio);
-  if (isNaN(parsedPrice) || zero == 0) {
-    this.bd.presentAlert('El precio no puede ser 0');
-    return; 
-  }
-  if (this.nombre.trim() === '') {
-    this.bd.presentAlert('El nombre del juego no puede ser solo espacios en blanco.');
-    return; 
-  }
-  if (this.descripcion.length < 10 || this.descripcion.length > 500) {
-    this.bd.presentAlert('La descripción debe tener entre 10 y 500 caracteres.');
-    return; 
-  }
-
-
-  if (!this.seccion) {
-    this.bd.presentAlert('Debes seleccionar una sección.');
-    return; 
-  }
-  if (!this.imagen) {
-    this.bd.presentAlert('Debes seleccionar una imagen.');
-    return; 
-  }
+  editar() {
+    const errores: string[] = [];
   
-  this.bd.actualizarJuego(this.id_juego,this.nombre,this.descripcion,this.precio,this.imagen)
-  this.bd.presentAlert("VideoJuego Actualizado");
-  this.router.navigate(['/lista-videojuegos'])
-}
+    // Validaciones
+    if (this.nombre.length < 3 || this.nombre.length > 20) {
+      errores.push('El nombre del juego debe tener entre 3 y 20 caracteres.');
+    }
+  
+    const parsedPrice = parseFloat(this.precio);
+    if (isNaN(parsedPrice) || parsedPrice <= 0) {
+      errores.push('El precio debe ser un número positivo mayor que 0.');
+    }
+  
+    if (this.nombre.trim() === '') {
+      errores.push('El nombre del juego no puede ser solo espacios en blanco.');
+    }
+  
+    if (this.descripcion.length < 10 || this.descripcion.length > 500) {
+      errores.push('La descripción debe tener entre 10 y 500 caracteres.');
+    }
+  
+    if (!this.seccion) {
+      errores.push('Debes seleccionar una sección.');
+    }
+  
+    if (!this.imagen) {
+      errores.push('Debes seleccionar una imagen.');
+    }
+  
+    // Mostrar errores si los hay
+    if (errores.length > 0) {
+      this.bd.presentAlert(errores.join('\n'));
+      return;
+    }
+  
+    // Actualizar el juego
+    this.slug = this.generateSlug(this.nombre);
+    this.bd.actualizarJuego(this.id_juego, this.nombre, this.descripcion, this.precio, this.imagen, this.seccion,this.slug);
+    this.bd.presentAlert('VideoJuego Actualizado');
+    this.router.navigate(['/lista-videojuegos']);
+  }
+  private generateSlug(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/ /g, '-')
+      .replace(/[^\w-]+/g, '');
+  }
+
 async takePicture() {
   const image = await Camera.getPhoto({
     quality: 90,

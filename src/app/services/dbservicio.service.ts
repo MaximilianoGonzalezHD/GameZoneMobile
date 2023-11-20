@@ -176,17 +176,18 @@ export class DbservicioService {
       })
   }
 
-  actualizarJuego(id_juego: any, nombrev: any, descripcion: any, precio: any, imagenv: any) {
-    return this.database.executeSql('UPDATE videojuegos SET nombrev = ?, descripcion = ?, precio = ?, imagenv = ? WHERE id_juego = ?', [nombrev, descripcion, precio, imagenv, id_juego]).then(res => {
-      this.buscarJuego();
-      this.buscarJuegoNintendo();
-      this.buscarJuegoPlaystation();
-      this.buscarJuegoXbox();
-      this.buscarJuegoPc();
-    })
-      .catch(e => {
-        this.presentAlert("Error al Actualizar el videojuego" + e)
+  actualizarJuego(id_juego: any, nombrev: any, descripcion: any, precio: any, imagenv: any, seccion: any, slug: any) {
+    return this.database.executeSql('UPDATE videojuegos SET nombrev = ?, descripcion = ?, precio = ?, imagenv = ?, seccion_id = ?, slug = ? WHERE id_juego = ?', [nombrev, descripcion, precio, imagenv, seccion, slug, id_juego])
+      .then(res => {
+        this.buscarJuego();
+        this.buscarJuegoNintendo();
+        this.buscarJuegoPlaystation();
+        this.buscarJuegoXbox();
+        this.buscarJuegoPc();
       })
+      .catch(e => {
+        this.presentAlert("Error al Actualizar el videojuego" + e);
+      });
   }
 
   borrarJuego(id_juego: any) {
@@ -614,7 +615,7 @@ async obtenerIdUltimaCompra(usuarioId: string | null | number): Promise<number> 
 async obtenerComprasPorUsuario(usuarioId: number | null | string): Promise<any[]> {
   console.log('Entrando en obtenerComprasPorUsuario');
   try {
-    const res = await this.database.executeSql('SELECT * FROM compra WHERE usuario_id = ?', [usuarioId]);
+    const res = await this.database.executeSql('SELECT * FROM compra WHERE usuario_id = ? ORDER BY fechac DESC', [usuarioId]);
     const compras = [];
     
     for (let i = 0; i < res.rows.length; i++) {
@@ -658,6 +659,7 @@ async obtenerDetallesCompraPorId(usuarioid: number | string | null): Promise<any
   }
   this.verdetalles();
 }
+
 
 async procesarCompraNoRegistrado(rut: string, correo: string, total: any) {
   const compraId = await this.crearCompraGenerica(rut,total);
@@ -747,7 +749,7 @@ verdetalles() {
             imagenu: res.rows.item(i).imagenu,
             rol_id: res.rows.item(i).rol_id,
             rut: res.rows.item(i).rut,
-            codigo_seg: res.row.item(i).codigo_seg,
+            codigo_seg: res.rows.item(i).codigo_seg,
           })
         }
       }
@@ -792,7 +794,7 @@ verdetalles() {
               imagenu: res.rows.item(i).imagenu,
               rol_id: res.rows.item(i).rol_id,
               rut: res.rows.item(i).rut,
-              codigo_seg: res.row.item(i).codigo_seg,
+              codigo_seg: res.rows.item(i).codigo_seg, 
             });
           }
         }
@@ -818,7 +820,7 @@ verdetalles() {
               imagenu: res.rows.item(i).imagenu,
               rol_id: res.rows.item(i).rol_id,
               rut: res.rows.item(i).rut,
-              codigo_seg: res.row.item(i).codigo_seg,
+              codigo_seg: res.rows.item(i).codigo_seg,
             });
           }
         }

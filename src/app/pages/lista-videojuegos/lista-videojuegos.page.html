@@ -21,7 +21,13 @@
         </ion-thumbnail>
         <ion-label>
           <h2>{{ x.nombrev }}</h2>
+          <p *ngIf="x.seccion_id == '1'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-playstation"></ion-icon>Playstation</p>
+          <p *ngIf="x.seccion_id == '2'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-xbox"></ion-icon>Xbox</p>
+          <p *ngIf="x.seccion_id == '3'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="game-controller-outline"></ion-icon>Nintendo</p>
+          <p *ngIf="x.seccion_id == '4'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-steam"></ion-icon>PC</p>
           <p style="word-wrap: break-word;white-space: normal;">precio: {{ x.precio | precioClp }}$</p>
+
+
         </ion-label>
       </ion-item>
       <ion-item-options>

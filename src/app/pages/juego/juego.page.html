@@ -44,7 +44,7 @@
     <ion-row>
       <ion-col><ion-button color="light" (click)="agregarAlCarrito(videojuego.id_juego)" expand="full">Añadir Al
           Carrito</ion-button></ion-col>
-      <ion-col><ion-button color="light" expand="full">Comprar</ion-button></ion-col>
+      <ion-col><ion-button color="light" (click)="comprar(videojuego.id_juego)" expand="full">Comprar</ion-button></ion-col>
     </ion-row>
   </ion-grid>
 

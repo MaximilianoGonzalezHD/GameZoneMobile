@@ -1,4 +1,5 @@
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
+import { NativeBiometric, BiometryType  } from "capacitor-native-biometric";
 import { AlertController, Platform } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Carrito } from './Carrito';
@@ -30,6 +31,7 @@ export class DbservicioService {
   detalles: string = "CREATE TABLE IF NOT EXISTS detallesc (id_detallesc INTEGER PRIMARY KEY, subtotal REAL, cantidad INTEGER, videojuego_id INTEGER, compra_id INTEGER, FOREIGN KEY (videojuego_id) REFERENCES videojuegos (id_juego),FOREIGN KEY (compra_id) REFERENCES compra (id_comprac));";
   carritoTablas: string = "CREATE TABLE IF NOT EXISTS carrito (id_carrito INTEGER PRIMARY KEY, usuario_id INTEGER, FOREIGN KEY (usuario_id) REFERENCES Usuario (id_usuariou));";
   item: string = "CREATE TABLE IF NOT EXISTS itemCarrito (id_itemcarrito INTEGER PRIMARY KEY, carrito_id INTEGER, videojuego_id INTEGER, cantidad INTEGER,FOREIGN KEY (carrito_id) REFERENCES carrito (id_carrito),FOREIGN KEY (videojuego_id) REFERENCES videojuegos (id_juego));";
+  credenciales: string = "CREATE TABLE IF NOT EXISTS credenciales ( id INTEGER PRIMARY KEY, username VARCHAR(20), password VARCHAR(50), server VARCHAR(50), biometry_type VARCHAR(50));"
 
   registro_seccion1: string = "INSERT or IGNORE INTO seccion(id_seccions,nombres) VALUES(1,'Playstation');";
   registro_seccion2: string = "INSERT or IGNORE INTO seccion(id_seccions,nombres) VALUES(2,'Xbox');";
@@ -830,6 +832,19 @@ verdetalles() {
       return false;
     }
   }
+  async autenticarUsuarioHuella(usuario: string, contrasena: string): Promise<boolean> {
+    try {
+      const result = await this.database.executeSql(
+        'SELECT * FROM usuario WHERE nombre_usuariou = ? AND contrasenau = ?',
+        [usuario, contrasena]
+      );
+  
+      return result.rows.length > 0;
+    } catch (error) {
+      console.error('Error al autenticar el usuario:', error);
+      return false;
+    }
+  }
 
   async obtenerIdUsuarioPorEmail(email: string): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -859,8 +874,61 @@ verdetalles() {
     });
   }
 
+  async obtenerIdUsuarioPorusuario(usuario: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.database.executeSql('SELECT id_usuariou FROM usuario WHERE nombre_usuariou = ?', [usuario])
+        .then(data => {
+          if (data.rows.length > 0) {
+            resolve(data.rows.item(0).id_usuariou.toString());
+          } else {
+            reject('Usuario no encontrado');
+          }
+        })
+        .catch(error => reject(error));
+    });
+  }
+
+  async obtenerRolUsuarioPorusuario(usuario: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.database.executeSql('SELECT rol_id FROM usuario WHERE nombre_usuariou = ?', [usuario])
+        .then(data => {
+          if (data.rows.length > 0) {
+            resolve(data.rows.item(0).rol_id.toString());
+          } else {
+            reject('Usuario no encontrado');
+          }
+        })
+        .catch(error => reject(error));
+    });
+  }
+  async guardarCredenciales(username: string, password: string, server: String, biometry_type: string) {
+    const query = "INSERT INTO credenciales (username, password, server, biometry_type) VALUES (?, ?, ?, ?)";
+    await this.database.executeSql(query, [username, password, server, biometry_type]);
+  }
 
 
+  async obtenerCredenciales(): Promise<{ username: string, password: string } | null> {
+    const query = "SELECT username, password FROM credenciales LIMIT 1";
+  
+    try {
+      const result = await this.database.executeSql(query, []);
+  
+      if (result.rows.length > 0) {
+        const username = result.rows.item(0).username;
+        const password = result.rows.item(0).password;
+        return { username, password };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al obtener credenciales:', error);
+      return null;
+    }
+  }
+
+  async eliminarcredenciales(){
+    await this.database.executeSql("DELETE FROM credenciales", []);
+  };
 
   setItem(key: string, value: string) {
     localStorage.setItem(key, value);
@@ -896,6 +964,7 @@ verdetalles() {
       await this.database.executeSql(this.detalles, []);
       await this.database.executeSql(this.carritoTablas, []);
       await this.database.executeSql(this.item, []);
+      await this.database.executeSql(this.credenciales, []);
       //inserciones
 
       //secciones

@@ -69,6 +69,39 @@ export class JuegoPage implements OnInit {
         console.error(error);
       });
   }
+
+  comprar(videojuego_id: number) {
+    this.bd.obtenerIdCarritoDeUsuario(this.userId)
+      .then((carritoId) => {
+        this.bd.obtenerItemCarrito(carritoId, videojuego_id)
+          .then((itemCarrito) => {
+            if (itemCarrito) {
+              const nuevaCantidad = itemCarrito.cantidad + 1;
+              this.bd.actualizarCantidadEnCarrito(videojuego_id, nuevaCantidad, carritoId)
+                .then(() => {
+                  this.router.navigate(['/carrito']);
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            } else {
+              this.bd.agregarAlCarrito(videojuego_id, 1, carritoId)
+                .then(() => {
+                  this.router.navigate(['/datos-pago']);
+                })
+                .catch(error => {
+                  console.error(error);
+                });
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
 }
 
 

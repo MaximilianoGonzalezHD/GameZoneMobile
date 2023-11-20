@@ -72,8 +72,8 @@
             <ion-label for="codigo" class="form-label" position="floating" >Codigo Seguridad </ion-label>
             <ion-input type="number" class="form-control" id="codigo" [(ngModel)]="codigo" codigo="codigo" required formControlName="codigo"></ion-input>
             <div *ngIf=" formularioRegistro.get('codigo')?.touched && formularioRegistro.get('codigo')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
-            <div *ngIf=" formularioRegistro.get('codigo')?.touched && formularioRegistro.get('codigo')?.errors?.['maxlength']" class="alert alert-danger">El codigo debe ser de 4 digitos...</div>
-
+            <div *ngIf=" formularioRegistro.get('codigo')?.touched && formularioRegistro.get('codigo')?.errors?.['minlength']" class="alert alert-danger">Min 4 caracteres...</div>
+          <div *ngIf=" formularioRegistro.get('codigo')?.touched && formularioRegistro.get('codigo')?.errors?.['maxlength']" class="alert alert-danger">Max 4 caracteres...</div>
           </div>
         </ion-item>
         <br>

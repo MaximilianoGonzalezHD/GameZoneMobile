@@ -23,6 +23,7 @@ export class RegisterPage implements OnInit {
   contrau: any = "";
   nombreuop: any = "";
   rol: any = "1";
+  codigo: any = "";
   
 
   constructor(
@@ -78,6 +79,14 @@ export class RegisterPage implements OnInit {
             Validators.required,
             passwordMatchValidator
           ]
+        ],
+        'codigo': [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(4)
+          ]
         ]
       });
   }
@@ -97,7 +106,7 @@ export class RegisterPage implements OnInit {
       await alert.present();
       return;
     } else  {
-      this.db.agregarUsuario(this.correou,this.nombreu,this.contrau,this.nombreuop,this.rol,this.rutu);
+      this.db.agregarUsuario(this.correou,this.nombreu,this.contrau,this.nombreuop,this.rol,this.rutu,this.codigo);
       const toast = await this.toastController.create({
         message: 'Registrado Correctamente',
         duration: 1500,

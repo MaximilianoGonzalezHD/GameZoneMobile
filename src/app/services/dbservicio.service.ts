@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 
 export class DbservicioService {
   rol: string = "CREATE TABLE IF NOT EXISTS rol (id_rolr INTEGER PRIMARY KEY, nombrer VARCHAR(10));";
-  usuario: string = "CREATE TABLE IF NOT EXISTS usuario (id_usuariou INTEGER PRIMARY KEY, emailu VARCHAR(30), nombre_usuariou VARCHAR(30)  NOT NULL, contrasenau VARCHAR(30) NOT NULL, nombreu VARCHAR(15), imagenu BLOB, rol_id INTEGER, rut VARCHAR(20), FOREIGN KEY (rol_id) REFERENCES rol(id_rolr));";
+  usuario: string = "CREATE TABLE IF NOT EXISTS usuario (id_usuariou INTEGER PRIMARY KEY, emailu VARCHAR(30), nombre_usuariou VARCHAR(30)  NOT NULL, contrasenau VARCHAR(30) NOT NULL, nombreu VARCHAR(15), imagenu BLOB, rol_id INTEGER, rut VARCHAR(20), codigo_seg varchar(4), FOREIGN KEY (rol_id) REFERENCES rol(id_rolr));";
   seccion: string = "CREATE TABLE IF NOT EXISTS seccion (id_seccions INTEGER PRIMARY KEY, nombres VARCHAR(30));";
   juego: string = "CREATE TABLE IF NOT EXISTS videojuegos (id_juego INTEGER PRIMARY KEY, nombrev VARCHAR(50) NOT NULL, descripcion VARCHAR(500)  NOT NULL, precio REAL NOT NULL, imagenv BLOB  NOT NULL, seccion_id INTEGER NOT NULL, slug VARCHAR(50) UNIQUE, FOREIGN KEY (seccion_id) REFERENCES seccion(id_seccions));";
   compra: string = "CREATE TABLE IF NOT EXISTS compra (id_comprac INTEGER PRIMARY KEY, fechac DATE, rutc VARCHAR(20), totalc INTEGER, usuario_id INTEGER,FOREIGN KEY (usuario_id) REFERENCES usuario (id_usuariou));";
@@ -41,7 +41,7 @@ export class DbservicioService {
   rol1: string = "INSERT or IGNORE INTO rol(id_rolr, nombrer) VALUES(1, 'Usuario');";
   rol2: string = "INSERT or IGNORE INTO rol(id_rolr, nombrer) VALUES(2, 'Administrador');";
   carrito_generico: string = "INSERT or IGNORE  INTO  carrito (id_carrito, usuario_id) VALUES (1, NULL)";
-  admin: string = "INSERT or IGNORE INTO usuario (id_usuariou,emailu,nombre_usuariou,contrasenau,rol_id, rut) VALUES(1,'admin@admin.cl', 'adminfirst','admin123',2, '12345678-9')";
+  admin: string = "INSERT or IGNORE INTO usuario (id_usuariou,emailu,nombre_usuariou,contrasenau,rol_id, rut, codigo_seg) VALUES(1,'admin@admin.cl', 'adminfirst','admin123',2, '12345678-9', '1234')";
 
   constructor(private router: Router, private alertController: AlertController, private sqlite: SQLite, private platform: Platform) {
     this.createDatabase();
@@ -747,6 +747,7 @@ verdetalles() {
             imagenu: res.rows.item(i).imagenu,
             rol_id: res.rows.item(i).rol_id,
             rut: res.rows.item(i).rut,
+            codigo_seg: res.row.item(i).codigo_seg,
           })
         }
       }
@@ -758,6 +759,21 @@ verdetalles() {
     });
   }
 
+  validarCorreoExistente(email: string): Promise<boolean> {
+    return this.database.executeSql('SELECT COUNT(*) AS count FROM usuario WHERE emailu = ?', [email])
+      .then(res => {
+        // Comprobamos el resultado
+        if (res.rows.length > 0) {
+          const count = res.rows.item(0).count;
+          return count > 0; // Retorna true si existe al menos un registro con el correo
+        }
+        return false; // Si no hay resultados, el correo no existe
+      })
+      .catch(error => {
+        console.error('Error al validar correo en la base de datos:', error);
+        return false;
+      });
+  }
 
   
   async buscarUsuarioPorId(id: any): Promise<Usuario[]> {
@@ -776,6 +792,7 @@ verdetalles() {
               imagenu: res.rows.item(i).imagenu,
               rol_id: res.rows.item(i).rol_id,
               rut: res.rows.item(i).rut,
+              codigo_seg: res.row.item(i).codigo_seg,
             });
           }
         }
@@ -785,10 +802,48 @@ verdetalles() {
       }
     });
   }
+  async buscarUsuarioPorcorreo(correo: string): Promise<Usuario[]> {
+    return new Promise<Usuario[]>(async (resolve, reject) => {
+      try {
+        const res = await this.database.executeSql('SELECT * FROM usuario where emailu = ?', [correo]);
+        let items: Usuario[] = [];
+        if (res.rows.length > 0) {
+          for (var i = 0; i < res.rows.length; i++) {
+            items.push({
+              id_usuariou: res.rows.item(i).id_usuariou,
+              emailu: res.rows.item(i).emailu,
+              nombre_usuariou: res.rows.item(i).nombre_usuariou,
+              contrasenau: res.rows.item(i).contrasenau,
+              nombreu: res.rows.item(i).nombreu,
+              imagenu: res.rows.item(i).imagenu,
+              rol_id: res.rows.item(i).rol_id,
+              rut: res.rows.item(i).rut,
+              codigo_seg: res.row.item(i).codigo_seg,
+            });
+          }
+        }
+        resolve(items);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  buscarCodigoUsuarioPorCorreo(correo: string | null): Promise<string | null> {
+    return this.database.executeSql('SELECT codigo_seg FROM usuario WHERE emailu = ?', [correo])
+      .then(res => {
+        if (res.rows.length > 0) {
+          return res.rows.item(0).codigo_seg as string;
+        }
+        return null; // Si no hay resultados, el correo no existe
+      })
+      .catch(error => {
+        console.error('Error al buscar código del usuario por correo:', error);
+        return null;
+      });
+  }
 
-  
-  agregarUsuario(emailu: any, nombre_usuariou: any, contrasenau: any, nombreu: any, rol_id: any, rut: any) {
-    return this.database.executeSql('INSERT INTO usuario(emailu, nombre_usuariou, contrasenau, nombreu, rol_id, rut) VALUES(?,?,?,?,?,?)', [emailu, nombre_usuariou, contrasenau, nombreu, rol_id, rut]).then(res => {
+  agregarUsuario(emailu: any, nombre_usuariou: any, contrasenau: any, nombreu: any, rol_id: any, rut: any,codigo: any) {
+    return this.database.executeSql('INSERT INTO usuario(emailu, nombre_usuariou, contrasenau, nombreu, rol_id, rut, codigo_seg) VALUES(?,?,?,?,?,?,?)', [emailu, nombre_usuariou, contrasenau, nombreu, rol_id, rut, codigo]).then(res => {
       this.buscarUsuario();
     });
   }

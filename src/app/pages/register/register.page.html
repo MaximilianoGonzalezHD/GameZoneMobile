@@ -67,6 +67,15 @@
             <div *ngIf=" formularioRegistro.get('confirmacionPassword')?.touched && formularioRegistro.get('confirmacionPassword')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
           </div>
         </ion-item>
+        <ion-item>
+          <div>
+            <ion-label for="codigo" class="form-label" position="floating" >Codigo Seguridad </ion-label>
+            <ion-input type="number" class="form-control" id="codigo" [(ngModel)]="codigo" codigo="codigo" required formControlName="codigo"></ion-input>
+            <div *ngIf=" formularioRegistro.get('codigo')?.touched && formularioRegistro.get('codigo')?.errors?.['required']" class="alert alert-danger">Campo vacio...</div>
+            <div *ngIf=" formularioRegistro.get('codigo')?.touched && formularioRegistro.get('codigo')?.errors?.['maxlength']" class="alert alert-danger">El codigo debe ser de 4 digitos...</div>
+
+          </div>
+        </ion-item>
         <br>
         <ion-button (click)="guardar()">Registrarse
         </ion-button>

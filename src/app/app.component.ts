@@ -18,6 +18,7 @@ export class AppComponent {
       this.bd.setItem('userId', "null");
       this.bd.setItem('userRole', "null");
     }
+    
   }
 
   hasUserRole(role: string): boolean {

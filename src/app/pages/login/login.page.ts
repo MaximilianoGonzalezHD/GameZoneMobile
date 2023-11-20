@@ -20,6 +20,7 @@ export class LoginPage {
       nombreu: '',
       rol_id: '',
       rut: '',
+      codigo_seg: '',
     }
 ]
 

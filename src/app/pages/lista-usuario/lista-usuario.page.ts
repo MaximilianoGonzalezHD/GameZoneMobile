@@ -18,6 +18,7 @@ export class ListaUsuarioPage implements OnInit {
       contrasenau: '',
       nombreu: '',
       rol_id: '',
+      codigo_seg: '',
     }
 
   ]

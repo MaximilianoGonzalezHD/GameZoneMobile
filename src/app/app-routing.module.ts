@@ -77,6 +77,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/olvide-contrasena/olvide-contrasena.module').then( m => m.OlvideContrasenaPageModule)
   },
   {
+    path: 'codigo',
+    loadChildren: () => import('./pages/codigo/codigo.module').then( m => m.CodigoPageModule)
+  },
+  {
     path: 'datos-pago',
     loadChildren: () => import('./pages/datos-pago/datos-pago.module').then( m => m.DatosPagoPageModule)
   },
@@ -87,6 +91,10 @@ const routes: Routes = [
   {
     path: 'cambiar-contrasena',
     loadChildren: () => import('./pages/cambiar-contrasena/cambiar-contrasena.module').then( m => m.CambiarContrasenaPageModule)
+  },
+  {
+    path: 'cambiar-contrasena-seg',
+    loadChildren: () => import('./pages/cambiar-contrasena-seg/cambiar-contrasena-seg.module').then( m => m.CambiarContrasenaSegPageModule)
   },
   {
     path: 'mod-perfil',
@@ -109,6 +117,8 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/error/error.module').then( m => m.ErrorPageModule)
   },
+
+
 
 
 

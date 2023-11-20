@@ -7,4 +7,5 @@ export class Usuario{
     imagenu = "";
     rol_id = "";
     rut = "";
+    codigo_seg ="";
 }

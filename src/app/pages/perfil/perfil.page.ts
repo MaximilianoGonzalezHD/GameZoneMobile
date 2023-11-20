@@ -19,6 +19,7 @@ export class PerfilPage implements OnInit {
       imagenu: '',
       rol_id: '',
       rut: '',
+      codigo_seg: '',
     }
 
   ]

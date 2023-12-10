@@ -6,7 +6,7 @@ describe('ListaVideojuegosPage', () => {
   let component: ListaVideojuegosPage;
   let fixture: ComponentFixture<ListaVideojuegosPage>;
 
-  beforeEach(async() => {
+  beforeEach(async => {
     TestBed.configureTestingModule({
       providers: [SQLite]
     }).compileComponents();

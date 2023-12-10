@@ -29,6 +29,7 @@ export class HistorialPage implements OnInit {
     id_detallesc: '',
     id_comprac: '',
     compra_id: '',
+    codigo: '',
     }
   ]
   userId: string | null | number;
@@ -44,6 +45,20 @@ export class HistorialPage implements OnInit {
     } catch (error) {
       console.error('Error al cargar datos:', error);
     }
+    this.detalles.forEach(detalle => {
+      detalle.codigo = this.generarCodigoAleatorio();
+    });
+  }
+  private generarCodigoAleatorio(): string {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let codigo = '';
+
+    for (let i = 0; i < 10; i++) {
+      const indice = Math.floor(Math.random() * caracteres.length);
+      codigo += caracteres.charAt(indice);
+    }
+
+    return codigo;
   }
 }
   

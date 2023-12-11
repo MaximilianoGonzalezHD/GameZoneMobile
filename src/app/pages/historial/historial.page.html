@@ -8,52 +8,41 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="container">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <h1 class="neon-rgb">Historial De Compras</h1>
-        </ion-col>
-      </ion-row>
+  <ion-searchbar class="m-t" placeholder="Buscar en el historial"></ion-searchbar>
 
-      <ion-row>
-        <ion-col>
-          <ion-list lines="none" class="custom-table">
-            <ion-item class="header-row">
-              <ion-label class="centrado"></ion-label>
-              <ion-label class="centrado">Nombre</ion-label>
-              <ion-label class="centrado">Cantidad</ion-label>
-              <ion-label class="centrado">Subtotal</ion-label>
-              <ion-label class="centrado">Total</ion-label>
-              <ion-label class="centrado">Codigo</ion-label>
-            </ion-item>
+  <ion-card class="m-t centrado">
+    <ion-card-title class="m-t neon-rgb">Historial de Compras</ion-card-title>
+    <ion-card-content>
+      <ion-list *ngIf="detalles.length > 0">
+        <ion-item *ngFor="let detalle of detalles" class="historial-item">
+          <ion-thumbnail slot="start">
+            <img [src]="detalle.imagenv" alt="Imagen del juego">
+          </ion-thumbnail>
+          <ion-label class="centrado">
+            <h3>{{ detalle.nombrev }}</h3>
+            <p *ngIf="detalle.seccion_id == '1'"><ion-icon slot="start" name="logo-playstation"></ion-icon><br>Playstation</p>
+            <p *ngIf="detalle.seccion_id == '2'"><ion-icon slot="start" name="logo-xbox"></ion-icon><br>Xbox</p>
+            <p *ngIf="detalle.seccion_id == '3'"><ion-icon slot="start" name="game-controller-outline"></ion-icon><br>Nintendo</p>
+            <p *ngIf="detalle.seccion_id == '4'"><ion-icon slot="start" name="logo-steam"></ion-icon><br>PC</p>
+          </ion-label>
+          <ion-label>
+            <p class="centrado">cantidad:</p>
+            <p  class="centrado">subtotal:</p>
+            <p class="centrado">total:</p>
+            <p  class="centrado">codigo:</p>
+           </ion-label>
+          <ion-label>
+           <p class="centrado"> {{ detalle.cantidad }} </p>
+           <p  class="centrado"> {{ detalle.subtotal | precioClp }} </p>
+           <p class="centrado"> {{ detalle.totalc | precioClp }} </p>
+           <p  class="centrado"> {{ detalle.codigo }} </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
 
-            <ion-item *ngFor="let detalle of detalles">
-              <ion-thumbnail slot="start">
-                <img [src]="detalle.imagenv" alt="Imagen del juego">
-              </ion-thumbnail>
-              <ion-label class="centrado">
-                {{ detalle.nombrev }}
-                <p *ngIf="detalle.seccion_id == '1'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-playstation"></ion-icon><br>Playstation</p>
-                <p *ngIf="detalle.seccion_id == '2'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-xbox"></ion-icon><br>Xbox</p>
-                <p *ngIf="detalle.seccion_id == '3'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="game-controller-outline"></ion-icon><br>Nintendo</p>
-                <p *ngIf="detalle.seccion_id == '4'" style="word-wrap: break-word;white-space: normal;"><ion-icon  slot="start" name="logo-steam"></ion-icon><br>PC</p>
-              </ion-label>
-              <ion-label class="centrado">{{ detalle.cantidad }}</ion-label>
-              <ion-label class="centrado">{{ detalle.subtotal | precioClp }}</ion-label>
-              <ion-label class="centrado">{{ detalle.totalc | precioClp }}</ion-label>
-              <ion-label class="centrado">{{ detalle.codigo }}</ion-label> 
-
-            </ion-item>
-
-            <ion-row *ngIf="!(detalles && detalles.length > 0)">
-              <ion-col>
-                <p>No hay juegos comprados</p>
-              </ion-col>
-            </ion-row>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
+      <div class="ion-text-center" *ngIf="detalles.length === 0">
+        No hay historial de compras.
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

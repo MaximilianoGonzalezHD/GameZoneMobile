@@ -84,9 +84,11 @@ export class ModPerfilPage implements OnInit {
   async takePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera,
+      source: CameraSource.Prompt,
+      promptLabelPhoto: "Usar una Foto",
+      promptLabelPicture: "Tomar Una Foto",
     });
 
     this.imagen = image.dataUrl;

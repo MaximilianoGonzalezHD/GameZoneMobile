@@ -44,7 +44,5 @@ export class PerfilPage implements OnInit {
   ircambiarcontrasena(){
     this.router.navigate(['/cambiar-contrasena'])
   }
-  irmodperfil(){
-    this.router.navigate(['/mod-perfil'])
-  }
+
 }
